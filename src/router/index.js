@@ -17,6 +17,22 @@ export default new Router({
       component: () => import('@/view/register')
     },
     {
+      path: '/AutoPaper',
+      name: 'register',
+      component: () => import('@/view/register')
+    },
+    // AutoPaper
+    {
+      path: '/AutoPaper',
+      name: 'AutoPaper',
+      component: () => import('@/view/AutoPaper')
+    },
+    {
+      path: '/ManualPaper',
+      name: 'ManualPaper',
+      component: () => import('@/view/ManualPaper')
+    },
+    {
       path: '/home',
       name: 'home',
       component: () => import('@/view/home')

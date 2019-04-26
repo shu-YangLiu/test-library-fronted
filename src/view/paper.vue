@@ -43,7 +43,7 @@ export default {
         return return_array;
       }
       this.randomMovieList = getArrayItems(this.movieList, 5);
-    },
+    }
   },
   mounted() {
     this.changeLimit();
