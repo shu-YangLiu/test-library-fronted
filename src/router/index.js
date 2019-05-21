@@ -33,6 +33,11 @@ export default new Router({
       component: () => import('@/view/ManualPaper')
     },
     {
+      path: '/Enter',
+      name: 'Enter',
+      component: () => import('@/view/form/Enter')
+    },
+    {
       path: '/home',
       name: 'home',
       component: () => import('@/view/home')

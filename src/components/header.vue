@@ -1,11 +1,11 @@
 <template>
   <div>
     <Menu mode="horizontal" theme="dark" active-key="1">
-      <MenuItem  name="1">
+      <MenuItem  name="1" @click.native="home">
         <Icon type="ios-paper" ></Icon>主页
       </MenuItem>
-      <MenuItem name="2">
-        <Icon type="ios-people"></Icon>试卷录入
+      <MenuItem name="2" @click.native="Enter">
+        <Icon type="ios-people" ></Icon>试题录入
       </MenuItem>
       <Submenu  name="3">
         <template slot="title">
@@ -37,6 +37,12 @@ export default {
   methods: {
     autopaper() {
       this.$router.push("register");
+    },
+    home() {
+      this.$router.push("home");
+    },
+    Enter() {
+      this.$router.push("Enter");
     }
   }
 };
@@ -44,13 +50,14 @@ export default {
 
 <style>
 .ivu-menu-horizontal .ivu-MenuItem,
-.ivu-menu-horizontal .ivu-menu-submenu {
-  float: right;
-  padding: 0 20px;
-  position: relative;
-  cursor: pointer;
-  z-index: 3;
-  transition: all 0.2s ease-in-out;
+
+.ivu-menu-horizontal .ivu-menu-item, .ivu-menu-horizontal .ivu-menu-submenu {
+    float: right;
+    padding: 0 20px;
+    position: relative;
+    cursor: pointer;
+    z-index: 3;
+    transition: all .2s ease-in-out;
 }
 .shit {
   float: left !important;
@@ -59,7 +66,5 @@ export default {
   background-color: #ffffff;
   padding: 0px;
 }
-.ivu-layout-content {
-  /* background-color: #ffffff; */
-}
+
 </style>
