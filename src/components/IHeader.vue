@@ -126,7 +126,7 @@ export default {
             for (i = 0; i < this.invitationList.length; i++) {
               this.card.push(true);
             }
-            // console.log(this.card);
+            
           }
         })
         .catch(res => {
@@ -169,10 +169,7 @@ export default {
     },
     //拒绝邀请
     refuse(invitation_id, index) {
-      // let data = {
-      //   invitation_id: parseInt(invitation_id)
-      // };
-      this.axios
+        this.axios
         .delete("http://localhost:8090/invitations/received", {
           params: { invitation_id: invitation_id }
         })
