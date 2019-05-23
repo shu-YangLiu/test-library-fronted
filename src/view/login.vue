@@ -5,7 +5,7 @@
         <h1 class="title">试题库管理系统</h1>
         <Form ref="formCustom" :model="loginForm" :rules="loginRule">
           <FormItem prop="email">
-            <Input type="text" placeholder="邮箱" v-model="loginForm.email">
+            <Input type="text" placeholder="用户名" v-model="loginForm.username">
               <Icon type="md-mail" slot="prepend" size="20"></Icon>
             </Input>
           </FormItem>
@@ -59,11 +59,11 @@ export default {
     return {
       fixStyle: "",
       loginForm: {
-        email: "",
+        username: "",
         password: ""
       },
       loginRule: {
-        email: [{ required: true, message: "请输入邮箱", trigger: "blur" }],
+        uesrname: [{ required: true, message: "请输入用户名", trigger: "blur" }],
         password: [
           { required: true, message: "请填写密码", trigger: "blur" }
           // { type: "string", min: 6, message: "密码至少6位", trigger: "blur" }
@@ -84,6 +84,35 @@ export default {
   },
 
   methods: {
+    handleSubmit(name){
+      this.$refs[name].validate(valid =>{
+        if (valid){
+          let formData=new FormData();
+          formData.append("username", this.loginForm.username);
+          formData.append("password", this.loginForm.password);
+
+          this.axios
+            .post("http://localhost:8000/test_library/login/",formData)
+            .then(res=>{
+              console.log(res.data)
+              if(res.data.isOK==true){
+                console.log(res.data.data);
+                localStorage.setItem("userInfo", JSON.stringify(res.data.data));
+
+                this.$Message.success("Success!");
+                this.$router.push("home");
+              } else {
+                this.$Message.error("请输入正确的用户名和密码");
+              }
+            })
+            .catch(res => {
+              console.log(res);
+            });
+        }else{
+          this.$Message.error("请输入正确的用户名和密码");
+        }
+      })
+    },
     // handleSubmit(name) {
     //   this.$refs[name].validate(valid => {
     //     if (valid) {
@@ -93,9 +122,9 @@ export default {
     //       formData.append("password", this.loginForm.password);
 
     //       this.axios
-    //         .post("http://localhost:8090/login/", formData)
+    //         .post("http://localhost:8000/login/", formData)
     //         .then(res => {
-    //           if (res.data.code == 200) {
+    //           if (res.data.isOK == True) {
     //             console.log(res.data.data);
     //             localStorage.setItem("userInfo", JSON.stringify(res.data.data));
 
@@ -113,11 +142,11 @@ export default {
     //     }
     //   });
     // },
-    handleSubmit(name) {
-      this.$refs[name].validate(valid => {
-        this.$router.push("home");
-      });
-    },
+    // handleSubmit(name) {
+    //   this.$refs[name].validate(valid => {
+    //     this.$router.push("home");
+    //   });
+    // },
     toRegister(name) {
       this.$refs[name].validate(valid => {
         this.$router.push("register");

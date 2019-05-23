@@ -1,13 +1,13 @@
 <template>
   <div>
     <Row>
-      <i-col span="6" v-for="i in cards" :key="i">
-        <Card style="width:250px;margin:30px">
-          <p slot="title">试卷{{i}}</p>
-          <p>试卷信息1</p>
-          <p>试卷信息2</p>
-          <p>试卷信息3</p>
-          <p>试卷信息4</p>
+      <i-col span="6" v-for="paper in papers" :key="paper.name" >
+        <Card style="width:250px;margin:30px" >
+          <p slot="title">{{paper.name}}</p>
+          <p>科目：{{paper.subject}}</p>
+          <p>学校：{{paper.school}}</p>
+          <p>年级：{{paper.grade}}</p>
+          <p>总分：{{paper.points}}</p>
         </Card>
       </i-col>
       
@@ -20,8 +20,25 @@ export default {
   data() {
     return {
       cards: [1, 2, 3, 4, 5,6,7,8,9],
+      userInfo: JSON.parse(localStorage.getItem("userInfo")),      
+      papers:"",
       randomMovieList: []
     };
+  },
+  
+  created: function() {
+    console.log(this.userInfo);
+    // count = 5;
+    this.axios
+      .post("http://localhost:8000/test_library/paper/")
+      .then(res => {
+        this.papers = res.data;
+        console.log(this.papers)
+        console.log(this.papers[0].name)
+      })
+      .catch(res=>{
+        console.log(res);
+      });
   },
   methods: {
     changeLimit() {
