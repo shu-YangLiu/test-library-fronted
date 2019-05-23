@@ -14,21 +14,39 @@
               v-model="school_num"
               prefix="ios-home"
               @on-change="get_school"
-              style="width:90%"
+              style="width:93%"
             >
               <Option v-for="item in this.schoollist" :value="item" :key="item">{{ item}}</Option>
             </Select>
+            <Button
+              :size="buttonSize"
+              icon="md-add"
+              @click="modal1 = true"
+              style="float:right;margin:5px 1% "
+              shape="circle"
+            ></Button>
+            <Modal v-model="modal1" title="添加学校" @on-ok="ok" @on-cancel="cancel">
+              <Form :model="formItem" :label-width="80">
+                <FormItem label="选择属性">
+            <RadioGroup v-model="attribute" @on-change="get_attribute">
+              <Radio v-for="i in attributelist" :key="i" :label="i"></Radio>
+            </RadioGroup>
+          </FormItem>
+                <FormItem label="学校名称">
+                  <Input v-model="new_school" style="margin-bottom:10px"/>
+                </FormItem>
+              </Form>
+            </Modal>
           </FormItem>
           <FormItem>
-            <Button type="primary" @click="modal1 = true" >添加学校</Button>
-            <Modal v-model="modal1" title="添加学校" @on-ok="ok" @on-cancel="cancel">
-              <Input v-model="new_school" style="margin-bottom:10px"></Input>
-            </Modal>
+            <!-- <Button type="primary" @click="modal1 = true">添加学校</Button> -->
           </FormItem>
 
           <FormItem label="科目/知识点">
             <div>
-              <Cascader :data="subjectall" style="width:93%;float:left;" v-model="value2" filterable></Cascader>
+              <!-- <Cascader :data="data" v-model="value2" style="width:93%;"></Cascader> -->
+              <Cascader :data="subjectall" v-model="sub_kno"  style="width:93%;float:left;" filterable></Cascader>
+
               <Button
                 :size="buttonSize"
                 icon="md-add"
@@ -37,20 +55,50 @@
                 shape="circle"
               ></Button>
               <Modal v-model="modal2" title="添加科目/知识点" @on-ok="ok" @on-cancel="cancel">
-                <RadioGroup v-model="add_subject_type" @on-change="get_addsubject">
-                  <Cascader v-model="value3" :data="data" filterable></Cascader>
-                  <Radio label="添加一级知识点"></Radio>
-                  <Radio label="添加二级知识点"></Radio>
-                </RadioGroup>
+                <Form :model="formItem" :label-width="80">
+                  <FormItem label="请选择科目">
+                    <RadioGroup v-model="add_subject_type" @on-change="get_addsubject">
+                      <Radio label="添加一级知识点" value="n1"></Radio>
+                      <Radio label="添加二级知识点"></Radio>
+                    </RadioGroup>
+                  </FormItem>
+
+                  <FormItem label="选择科目" v-if="add_subject_type==='添加一级知识点'">
+                    <Select v-model="selece_obj1" style="width:200px">
+                      <Option v-for="item in selece_obj" :value="item" :key="item">{{ item }}</Option>
+                    </Select>
+                  </FormItem>
+                  <!-- <FormItem label="请选择科目">
+                   
+                  </FormItem>-->
+                  <FormItem label="一级知识点" v-if="add_subject_type==='添加一级知识点'">
+                    <Input
+                      v-model="add_knowledge1"
+                      placeholder="请输入一级知识点"
+                      clearable
+                      style="width: 200px"
+                    />
+                  </FormItem>
+                  <FormItem label="科目/一级知识点" v-if="add_subject_type==='添加二级知识点'">
+                    <Cascader v-model="value3" :data="data" filterable style="width: 49%"></Cascader>
+                  </FormItem>
+                  <FormItem label="二级知识点" v-if="add_subject_type==='添加二级知识点'">
+                    <Input
+                      v-model="add_knowledge2"
+                      placeholder="请输入二级知识点"
+                      clearable
+                      style="width: 200px"
+                    />
+                  </FormItem>
+                </Form>
 
                 <!-- <Input v-model="new_subjects" style="margin-bottom:10px"></Input> -->
               </Modal>
             </div>
           </FormItem>
 
-
-          <FormItem label="请选择题型">
-            <Select v-model="formItem.select" @on-change="test">
+          <FormItem label="选择题型">
+            <Select v-model="formItem.select" @on-change="test" style="width:93%">
               <Option value="option">选择题</Option>
               <Option value="blank">填空题</Option>
               <Option value="answer">简答题</Option>
@@ -62,21 +110,22 @@
               v-model="formItem.textarea"
               type="textarea"
               :autosize="{minRows: 2,maxRows: 5}"
-              placeholder="Enter something..."
-            ></Input>
+              placeholder="请输入题目"
+              style="width:93%"
+            />
           </FormItem>
           <FormItem v-if="formItem.select==='option'">
             <!-- <FormItem> -->
-            <Input v-model="option1" style="margin-bottom:10px">
+            <Input v-model="option1" style="margin-bottom:10px;width:93%">
               <span slot="prepend">A</span>
             </Input>
-            <Input v-model="option2" style="margin-bottom:10px">
+            <Input v-model="option2" style="margin-bottom:10px;width:93%">
               <span slot="prepend">B</span>
             </Input>
-            <Input v-model="option3" style="margin-bottom:10px">
+            <Input v-model="option3" style="margin-bottom:10px;width:93%">
               <span slot="prepend">C</span>
             </Input>
-            <Input v-model="option4">
+            <Input v-model="option4" style="width:93%">
               <span slot="prepend">D</span>
             </Input>
           </FormItem>
@@ -84,13 +133,14 @@
             <Rate @on-change="get_difcut" v-model="value_difct"/>
           </FormItem>
 
-          <FormItem label="答案" v-if="formItem.select!=='option'">
+          <FormItem label="答案" v-if="formItem.select!=='option'" >
             <Input
               v-model="formItem.textarea"
               type="textarea"
               :autosize="{minRows: 2,maxRows: 5}"
               placeholder="Enter something..."
-            ></Input>
+              style="width:93%"
+            />
           </FormItem>
           <FormItem>
             <Button type="primary">提交</Button>
@@ -102,7 +152,7 @@
         </div>-->
       </Card>
     </Col>
-    <Col span="6" class="padding-left-10"></Col>
+    <Col span="6" class="padding-left-10"/>
   </Row>
 </template>
                 
@@ -112,9 +162,15 @@
 export default {
   data() {
     return {
+      attributelist:["小学","初中","高中"],
+      
+      selece_obj: ["数学", "英语"],
+      add_knowledge1: "",
+      add_knowledge2: "",
       add_subject_type: "",
       buttonSize: "small",
       value_difct: 3,
+      sub_kno:[],
       school: [
         {
           value: "1",
@@ -136,12 +192,12 @@ export default {
       modal2: false,
       modal3: false,
       modal4: false,
-      
+
       grade: "",
       // flag="ture",
       gradelist: [],
-      schoollist:[],
-      subjectall:"",
+      schoollist: [],
+      subjectall: "",
       option1: "",
       option2: "",
       option3: "",
@@ -157,7 +213,7 @@ export default {
         slider: [20, 50],
         textarea: "",
         value2: [],
-        value3: [],
+        value3: []
       },
       data: [
         {
@@ -212,19 +268,18 @@ export default {
       model8: ""
     };
   },
-   created: function() {
+  created: function() {
     console.log(this.userInfo);
     // count = 5;
     this.axios
       .post("http://localhost:8000/test_library/get_enterquestionpage/")
       .then(res => {
-        console.log(res.data)
-        this.gradelist=res.data.grade
-        this.schoollist=res.data.school
-        this.subjectall=res.data.subjectall
-        
+        console.log(res.data);
+        this.gradelist = res.data.grade;
+        this.schoollist = res.data.school;
+        this.subjectall = res.data.subjectall;
       })
-      .catch(res=>{
+      .catch(res => {
         console.log(res);
       });
   },
@@ -250,6 +305,9 @@ export default {
     },
     aaa() {
       console.log(this.grade);
+    },
+    get_attribute() {
+      console.log(this.attributelist);
     },
     get_option() {
       console.log(this.option1);
