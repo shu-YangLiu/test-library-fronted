@@ -1,16 +1,15 @@
 <template>
   <div>
-    <Row>
-      <i-col span="6" v-for="paper in papers" :key="paper.name" >
-        <Card style="width:250px;margin:30px" >
+    <Row :gutter="16">
+        <Col span="6" v-for="paper in papers" :key="paper.name" >
+          <Card style="width:250px;margin:30px" @click="toDetail(paper.id)">
           <p slot="title">{{paper.name}}</p>
           <p>科目：{{paper.subject}}</p>
           <p>学校：{{paper.school}}</p>
           <p>年级：{{paper.grade}}</p>
           <p>总分：{{paper.points}}</p>
         </Card>
-      </i-col>
-      
+        </Col>
     </Row>
 
   </div>
