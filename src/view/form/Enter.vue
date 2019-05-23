@@ -10,54 +10,45 @@
             </RadioGroup>
           </FormItem>
           <FormItem label="请选择学校">
-            <Select v-model="school_num" prefix="ios-home" @on-change="get_school">
-              <Option v-for="item in school" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            <Select
+              v-model="school_num"
+              prefix="ios-home"
+              @on-change="get_school"
+              style="width:90%"
+            >
+              <Option v-for="item in this.schoollist" :value="item" :key="item">{{ item}}</Option>
             </Select>
           </FormItem>
           <FormItem>
-            <Button type="primary" @click="modal1 = true">添加学校</Button>
+            <Button type="primary" @click="modal1 = true" >添加学校</Button>
             <Modal v-model="modal1" title="添加学校" @on-ok="ok" @on-cancel="cancel">
               <Input v-model="new_school" style="margin-bottom:10px"></Input>
             </Modal>
           </FormItem>
 
           <FormItem label="科目/知识点">
-            <Cascader :data="data"></Cascader>
+            <div>
+              <Cascader :data="subjectall" style="width:93%;float:left;" v-model="value2" filterable></Cascader>
+              <Button
+                :size="buttonSize"
+                icon="md-add"
+                @click="modal2 = true"
+                style="float:right;margin:5px 1% "
+                shape="circle"
+              ></Button>
+              <Modal v-model="modal2" title="添加科目/知识点" @on-ok="ok" @on-cancel="cancel">
+                <RadioGroup v-model="add_subject_type" @on-change="get_addsubject">
+                  <Cascader v-model="value3" :data="data" filterable></Cascader>
+                  <Radio label="添加一级知识点"></Radio>
+                  <Radio label="添加二级知识点"></Radio>
+                </RadioGroup>
+
+                <!-- <Input v-model="new_subjects" style="margin-bottom:10px"></Input> -->
+              </Modal>
+            </div>
           </FormItem>
-                    <FormItem >
-            <Button type="primary" @click="modal2 = true">添加科目</Button>
-            <Modal v-model="modal2" title="添加科目" @on-ok="ok" @on-cancel="cancel">
-              <Input v-model="new_subjects" style="margin-bottom:10px"></Input>
-            </Modal>
-            <Button  @click="modal3 = true" style="margin:0 20px">添加一级知识点</Button>
-            <Modal v-model="modal3" title="添加一级知识点" @on-ok="ok" @on-cancel="cancel">
-              <Input v-model="new_knowledge2" style="margin-bottom:10px"></Input>
-            </Modal>
-            <Button type="primary" @click="modal4 = true">添加二级知识点</Button>
-            <Modal v-model="modal4" title="添加二级知识点" @on-ok="ok" @on-cancel="cancel">
-              <Input v-model="new_knowledge2" style="margin-bottom:10px"></Input>
-            </Modal>
-          </FormItem>
-          <!-- <FormItem label="科目/知识点">
-            <Tabs size="small">
-              <TabPane label="语文">
-                <Button type="primary" @click="modal1 = true">运动学</Button>
-                <Modal v-model="modal1" title="二级知识点" @on-ok="ok" @on-cancel="cancel">
-                  <CheckboxGroup v-model="fruit">
-                    <Checkbox label="1"></Checkbox>
-                    <Checkbox label="2"></Checkbox>
-                    <Checkbox label="3"></Checkbox>
-                    <Checkbox label="4"></Checkbox>
-                    <Checkbox label="5"></Checkbox>
-                  </CheckboxGroup>
-                </Modal>
-              </TabPane>
-              <TabPane label="英语">标签二的内容</TabPane>
-              <TabPane label="数学">标签三的内容</TabPane>
-              <TabPane label="物理">标签四的内容</TabPane>
-              <TabPane label="历史">标签五的内容</TabPane>
-            </Tabs>
-          </FormItem>-->
+
+
           <FormItem label="请选择题型">
             <Select v-model="formItem.select" @on-change="test">
               <Option value="option">选择题</Option>
@@ -121,6 +112,8 @@
 export default {
   data() {
     return {
+      add_subject_type: "",
+      buttonSize: "small",
       value_difct: 3,
       school: [
         {
@@ -143,11 +136,12 @@ export default {
       modal2: false,
       modal3: false,
       modal4: false,
-      fruit: [],
+      
       grade: "",
       // flag="ture",
-      gradelist: ["一年级", "二年级", "三年级"],
-
+      gradelist: [],
+      schoollist:[],
+      subjectall:"",
       option1: "",
       option2: "",
       option3: "",
@@ -161,7 +155,9 @@ export default {
         date: "",
         time: "",
         slider: [20, 50],
-        textarea: ""
+        textarea: "",
+        value2: [],
+        value3: [],
       },
       data: [
         {
@@ -216,6 +212,22 @@ export default {
       model8: ""
     };
   },
+   created: function() {
+    console.log(this.userInfo);
+    // count = 5;
+    this.axios
+      .post("http://localhost:8000/test_library/get_enterquestionpage/")
+      .then(res => {
+        console.log(res.data)
+        this.gradelist=res.data.grade
+        this.schoollist=res.data.school
+        this.subjectall=res.data.subjectall
+        
+      })
+      .catch(res=>{
+        console.log(res);
+      });
+  },
   methods: {
     ok() {
       this.$Message.info("Clicked ok");
@@ -244,6 +256,9 @@ export default {
     },
     get_school() {
       console.log(this.school_num);
+    },
+    get_addsubject() {
+      console.log(this.add_subject_type);
     }
   }
 };
