@@ -14,6 +14,9 @@
         <MenuItem  name="3-1" @click.native="autopaper">自动组卷</MenuItem>
         <MenuItem name="3-2">手动组卷</MenuItem>
       </Submenu>
+      <MenuItem name="4" @click.native="Question"> 
+        <Icon type="ios-book-outline" ></Icon>试题库
+      </MenuItem>
       <MenuItem class="shit" name="1">
         <Input search placeholder="Enter something..."/>
       </MenuItem>
@@ -43,6 +46,9 @@ export default {
     },
     Enter() {
       this.$router.push("Enter");
+    },
+    Question(){
+      this.$router.push("Question");
     }
   }
 };
