@@ -45,7 +45,7 @@
           <FormItem label="科目/知识点">
             <div>
               <!-- <Cascader :data="data" v-model="value2" style="width:93%;"></Cascader> -->
-              <Cascader :data="subjectall" v-model="sub_kno"  style="width:93%;float:left;" filterable></Cascader>
+              <Cascader :data="subjectall" v-model="subjectall_data"  style="width:93%;float:left;" @on-change="printsubjectall"></Cascader>
 
               <Button
                 :size="buttonSize"
@@ -64,8 +64,8 @@
                   </FormItem>
 
                   <FormItem label="选择科目" v-if="add_subject_type==='添加一级知识点'">
-                    <Select v-model="selece_obj1" style="width:200px">
-                      <Option v-for="item in selece_obj" :value="item" :key="item">{{ item }}</Option>
+                    <Select v-model="add_subject" style="width:200px">
+                      <Option v-for="item in subjectlist" :value="item" :key="item">{{ item }}</Option>
                     </Select>
                   </FormItem>
                   <!-- <FormItem label="请选择科目">
@@ -80,7 +80,7 @@
                     />
                   </FormItem>
                   <FormItem label="科目/一级知识点" v-if="add_subject_type==='添加二级知识点'">
-                    <Cascader v-model="value3" :data="data" filterable style="width: 49%"></Cascader>
+                    <Cascader v-model="subjectinfo.data" :data="sub_kno" filterable style="width: 49%" @on-click="printsubject_know"></Cascader>
                   </FormItem>
                   <FormItem label="二级知识点" v-if="add_subject_type==='添加二级知识点'">
                     <Input
@@ -163,11 +163,13 @@ export default {
   data() {
     return {
       attributelist:["小学","初中","高中"],
-      
-      selece_obj: ["数学", "英语"],
       add_knowledge1: "",
       add_knowledge2: "",
       add_subject_type: "",
+      add_subject:"",
+      subjectlist:"",
+      subjectall_data:[],
+      subject_know1:[],
       buttonSize: "small",
       value_difct: 3,
       sub_kno:[],
@@ -202,6 +204,12 @@ export default {
       option2: "",
       option3: "",
       option4: "",
+      subjectinfo:{
+        data:"",
+        subject:"",
+        knowledge1:"",
+        knowledge2:""
+      },
       formItem: {
         input: "",
         select: "",
@@ -228,6 +236,8 @@ export default {
         this.gradelist = res.data.grade;
         this.schoollist = res.data.school;
         this.subjectall = res.data.subjectall;
+        this.sub_kno=res.data.subject_know1
+        this.subjectlist = res.data.subject
       })
       .catch(res => {
         console.log(res);
@@ -267,6 +277,21 @@ export default {
     },
     get_addsubject() {
       console.log(this.add_subject_type);
+    },
+    printsubject_know(value, selectedData) {
+      console.log("123")
+      console.log(value, selectedData)
+    },
+    printsubjectall(value, selectedData){
+      const areaName = selectedData.map(item => item.label)
+      let chinaArea = [...areaName]
+      this.subjectinfo.data = data
+      if (data.length === 3) {
+        this.subjectinfo.subject = data[0]
+        this.subjectinfo.knowledge1 = data[1]
+        this.subjectinfo.knowledge2 = data[2]
+      }
+      console.log(this.subjectinfo)
     }
   }
 };
