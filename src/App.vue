@@ -24,4 +24,14 @@ export default {
 };
 </script>
 
+<style>
+.app {
+  height: 100%;
+}
+html{
+  background:#f5f7f9
+}
+</style>
+
+
 
