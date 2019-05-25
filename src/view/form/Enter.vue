@@ -44,9 +44,8 @@
 
           <FormItem label="科目/知识点">
             <div>
-              <!-- <Cascader :data="data" v-model="value2" style="width:93%;"></Cascader> -->
-              <Cascader :data="subjectall" v-model="subjectall_data"  style="width:93%;float:left;" @on-change="printsubjectall"></Cascader>
-
+              <!-- <Cascader :data="subjectall" @on-change="printsubjectall"></Cascader> -->
+              <Cascader :data="subjectall" change-on-select style="width:93%;float:left;"  filterable @on-change="printsubjectall"></Cascader>
               <Button
                 :size="buttonSize"
                 icon="md-add"
@@ -80,7 +79,7 @@
                     />
                   </FormItem>
                   <FormItem label="科目/一级知识点" v-if="add_subject_type==='添加二级知识点'">
-                    <Cascader v-model="subjectinfo.data" :data="sub_kno" filterable style="width: 49%" @on-click="printsubject_know"></Cascader>
+                    <Cascader  :data="sub_kno" filterable style="width: 49%" @on-change="printsubject_know"></Cascader>
                   </FormItem>
                   <FormItem label="二级知识点" v-if="add_subject_type==='添加二级知识点'">
                     <Input
@@ -135,7 +134,7 @@
 
           <FormItem label="答案" v-if="formItem.select!=='option'" >
             <Input
-              v-model="formItem.textarea"
+              v-model="formItem.answer"
               type="textarea"
               :autosize="{minRows: 2,maxRows: 5}"
               placeholder="Enter something..."
@@ -163,30 +162,18 @@ export default {
   data() {
     return {
       attributelist:["小学","初中","高中"],
+      attribute:"",
       add_knowledge1: "",
       add_knowledge2: "",
       add_subject_type: "",
       add_subject:"",
       subjectlist:"",
-      subjectall_data:[],
+      subjectall_data:[1,3],
       subject_know1:[],
       buttonSize: "small",
       value_difct: 3,
       sub_kno:[],
-      school: [
-        {
-          value: "1",
-          label: "学校1"
-        },
-        {
-          value: "2",
-          label: "学校2"
-        },
-        {
-          value: "3",
-          label: "学校3"
-        }
-      ],
+      sub_kno1:[],
       school_num: "",
       new_school: "",
       form: "0",
@@ -199,18 +186,13 @@ export default {
       // flag="ture",
       gradelist: [],
       schoollist: [],
-      subjectall: "",
+      subjectall: [],
       option1: "",
       option2: "",
       option3: "",
       option4: "",
-      subjectinfo:{
-        data:"",
-        subject:"",
-        knowledge1:"",
-        knowledge2:""
-      },
       formItem: {
+        answer:"",
         input: "",
         select: "",
         radio: "male",
@@ -283,15 +265,8 @@ export default {
       console.log(value, selectedData)
     },
     printsubjectall(value, selectedData){
-      const areaName = selectedData.map(item => item.label)
-      let chinaArea = [...areaName]
-      this.subjectinfo.data = data
-      if (data.length === 3) {
-        this.subjectinfo.subject = data[0]
-        this.subjectinfo.knowledge1 = data[1]
-        this.subjectinfo.knowledge2 = data[2]
-      }
-      console.log(this.subjectinfo)
+    console.log("123")
+      console.log(value, selectedData)
     }
   }
 };

@@ -12,7 +12,7 @@
           <Icon type="stats-bars"></Icon>组卷
         </template>
         <MenuItem  name="3-1" @click.native="autopaper">自动组卷</MenuItem>
-        <MenuItem name="3-2">手动组卷</MenuItem>
+        <MenuItem name="3-2" @click.native="ManualPaper">手动组卷</MenuItem>
       </Submenu>
       <MenuItem name="4" @click.native="Question"> 
         <Icon type="ios-book-outline" ></Icon>试题库
@@ -39,7 +39,11 @@ export default {
   },
   methods: {
     autopaper() {
-      this.$router.push("register");
+      this.$router.push("AutoPaper");
+    },
+    //ManualPaper
+    ManualPaper() {
+      this.$router.push("ManualPaper");
     },
     home() {
       this.$router.push("home");

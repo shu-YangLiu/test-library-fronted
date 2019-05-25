@@ -23,8 +23,8 @@ export default new Router({
     },
     {
       path: '/AutoPaper',
-      name: 'register',
-      component: () => import('@/view/register')
+      name: 'AutoPaper',
+      component: () => import('@/view/AutoPaper')
     },
     // AutoPaper
     {
