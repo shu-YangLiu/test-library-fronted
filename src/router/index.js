@@ -40,7 +40,7 @@ export default new Router({
     {
       path: '/Enter',
       name: 'Enter',
-      component: () => import('@/view/form/Enter')
+      component: () => import('@/view/Enter')
     },
     {
       path: '/home',
@@ -51,6 +51,11 @@ export default new Router({
       path: '/paper',
       name: 'paper',
       component: () => import('@/view/paper')
-    }
+    },
+    {
+      path: '/testueditor',
+      name: 'testueditor',
+      component: () => import('@/view/testueditor')
+    },
   ]
 })

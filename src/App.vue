@@ -12,11 +12,13 @@
 </template>
 
 <script>
+import Ueditor from '@/components/ueditor/Ueditor.vue';
 import header from "./components/header.vue";
 export default {
   name: "App",
   components: {
-    appHeader: header
+    appHeader: header,
+    Ueditor
   },
   methods: {
     handle_header() {}
