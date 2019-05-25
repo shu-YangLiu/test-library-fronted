@@ -1,18 +1,9 @@
 <template>
   <Row style="background:#eee;padding:20px">
     <Col span="11">
-      <Card v-for="(paper,index) in paperlist" :key="paper" :label="paper" style="margin:15px">
-        <p slot="title">{{index+1}} {{paper.text}}</p>
-        <!-- <Col span="8"
-            <p slot="title">科目：{{paper.subject}}</p>
-        </Col>
-        <Col span="8">
-            <p slot="title">年级：{{paper.grade}}</p>
-        </Col> -->
-        <p slot="title"  style="float:left;">科目：{{paper.subject}} </p> 
-        <p slot="title" style="width:80%;float:right;">年级：{{paper.grade}} </p>
-        <p>答案：{{paper.answer}}</p>
-        <p>id:{{paper.id}}</p>
+      <Card v-for="(paper,index) in paperlist" :key="paper.id" :label="paper.id" style="margin:15px">
+        <p>{{index+1}}<span v-html="paper.text"></span></p>
+        <p>答案：<span v-html="paper.answer"></span></p>
       </Card>
       <div>
         <Page :total="100" show-elevator/>
