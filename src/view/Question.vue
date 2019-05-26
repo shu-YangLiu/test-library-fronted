@@ -1,12 +1,12 @@
 <template>
   <Row style="background:#eee;padding:20px">
     <Col span="11">
-      <Card v-for="(paper,index) in paperlist" :key="paper.id" :label="paper.id" style="margin:15px">
-        <p>{{index+1}}<span v-html="paper.text"></span></p>
-        <p>答案：<span v-html="paper.answer"></span></p>
+      <Card v-for="(question,index) in  showlist" :key=" question.id" :label="question.id" style="margin:15px">
+        <p>{{index+1+pageSize*(current-1)}}<span v-html=" question.text"></span></p>
+        <p>答案：<span v-html=" question.answer"></span></p>
       </Card>
-      <div>
-        <Page :total="100" show-elevator/>
+      <div style="text-align:center">
+        <Page :total="dataCount" :page-size="pageSize" :current="current" show-total @on-change="changepage" show-elevator/>
       </div>
     </Col>
     <Col span="6" class="padding-left-10"></Col>
@@ -17,7 +17,11 @@ export default {
   data() {
     return {
       userInfo: JSON.parse(localStorage.getItem("userInfo")),
-      paperlist: ""
+      questionlist: [],
+      showlist:[],
+      dataCount:0,
+      pageSize:2,
+      current:1,
     };
   },
   created: function() {
@@ -26,11 +30,27 @@ export default {
       .post("http://localhost:8000/test_library/question/")
       .then(res => {
         console.log(res.data);
-        this.paperlist = res.data;
+        this.questionlist = res.data;
+        this.dataCount=this.questionlist.length;
+        console.log(this.dataCount,this.questionlist.length,this.pageSize)
+        if(this.dataCount<this.pageSize){
+          this.showlist=this.questionlist
+        }else{
+          this.showlist=this.questionlist.slice(0,this.pageSize)
+        }
+
       })
       .catch(res => {
         console.log(res);
       });
+  },
+  methods:{
+    changepage(index){
+      var start =(index-1)*this.pageSize;
+      var end=index*this.pageSize;
+      this.current=index
+      this.showlist=this.questionlist.slice(start,end);
+    }
   }
 };
 </script>

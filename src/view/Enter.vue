@@ -10,7 +10,7 @@
             </RadioGroup>
           </FormItem>
           <FormItem label="请选择学校">
-            <Select v-model="school" prefix="ios-home" @on-change="get_school" style="width:93%">
+            <Select v-model="school" prefix="ios-home" @on-change="get_school" style="width:93%" filterable>
               <Option v-for="item in this.schoollist" :value="item" :key="item">{{ item}}</Option>
             </Select>
             <Button
@@ -39,6 +39,7 @@
               <Cascader
                 :data="subjectall"
                 style="width:93%;float:left;"
+                filterable
                 @on-change="printsubjectall"
               ></Cascader>
 
@@ -64,8 +65,8 @@
                   </FormItem>
 
                   <FormItem label="选择科目" v-if="add_subject_type==='添加一级知识点'">
-                    <Select v-model="add_subject" style="width:200px">
-                      <Option v-for="item in subjectlist" :value="item" :key="item">{{ item }}</Option>
+                    <Select v-model="add_subject" style="width:200px" filterable>
+                      <Option v-for="item in subjectlist" :value="item" :key="item" >{{ item }}</Option>
                     </Select>
                   </FormItem>
                   <!-- <FormItem label="请选择科目">
