@@ -1,12 +1,58 @@
 <template>
   <Row style="background:#eee;padding:20px">
     <Col span="11">
-      <Card v-for="(question,index) in  showlist" :key=" question.id" :label="question.id" style="margin:15px">
-        <p>{{index+1+pageSize*(current-1)}}<span v-html=" question.text"></span></p>
-        <p>答案：<span v-html=" question.answer"></span></p>
+      <Card
+        v-for="(question,index) in showlist"
+        :key=" question.id"
+        :label="question.id"
+        style="margin:15px"
+      >
+      <Row :gutter="1">
+        <!-- <Col span="12">col-12</Col>
+        <Col span="12">col-12</Col> -->
+        <Col span="1" >{{index+1+pageSize*(current-1)}}</Col>
+        <Col span="22"><span v-html=" question.text"></span></Col>
+      </Row>
+        <!-- <p>
+          {{index+1+pageSize*(current-1)}}
+          <span v-html=" question.text"></span>
+        </p> -->
+        <Row :gutter="16">
+        <Col span="6">
+            <div>学科：{{question.subject}}</div>
+        </Col>
+        <Col span="6">
+            <div>难度：{{question.difficult}}</div>
+        </Col>
+        <Col span="6">
+            <div>年级：{{question.grade}}</div>
+        </Col>
+        <Col span="6">
+            <div>题型：{{question.types}}</div>
+        </Col>
+    </Row>
+        <!-- <Row>
+          <Col span="11">
+            <p>学科：{{question.subject}}</p>
+          </Col>
+          <Col span="11" offset="2">
+            <p>难度：{{question.difficult}}</p>
+          </Col>
+        </Row> -->
+        <p>
+          答案：
+          <span v-html=" question.answer"></span>
+        </p>
       </Card>
       <div style="text-align:center">
-        <Page :total="dataCount" :page-size="pageSize" :current="current" show-total @on-change="changepage" show-elevator/>
+        <Page
+          :total="dataCount"
+          :page-size="pageSize"
+          :current="current"
+          show-total
+          @on-change="changepage"
+          show-elevator
+        />
       </div>
     </Col>
     <Col span="6" class="padding-left-10"></Col>
@@ -18,10 +64,10 @@ export default {
     return {
       userInfo: JSON.parse(localStorage.getItem("userInfo")),
       questionlist: [],
-      showlist:[],
-      dataCount:0,
-      pageSize:2,
-      current:1,
+      showlist: [],
+      dataCount: 0,
+      pageSize: 2,
+      current: 1
     };
   },
   created: function() {
@@ -31,25 +77,24 @@ export default {
       .then(res => {
         console.log(res.data);
         this.questionlist = res.data;
-        this.dataCount=this.questionlist.length;
-        console.log(this.dataCount,this.questionlist.length,this.pageSize)
-        if(this.dataCount<this.pageSize){
-          this.showlist=this.questionlist
-        }else{
-          this.showlist=this.questionlist.slice(0,this.pageSize)
+        this.dataCount = this.questionlist.length;
+        console.log(this.dataCount, this.questionlist.length, this.pageSize);
+        if (this.dataCount < this.pageSize) {
+          this.showlist = this.questionlist;
+        } else {
+          this.showlist = this.questionlist.slice(0, this.pageSize);
         }
-
       })
       .catch(res => {
         console.log(res);
       });
   },
-  methods:{
-    changepage(index){
-      var start =(index-1)*this.pageSize;
-      var end=index*this.pageSize;
-      this.current=index
-      this.showlist=this.questionlist.slice(start,end);
+  methods: {
+    changepage(index) {
+      var start = (index - 1) * this.pageSize;
+      var end = index * this.pageSize;
+      this.current = index;
+      this.showlist = this.questionlist.slice(start, end);
     }
   }
 };

@@ -20,19 +20,19 @@
                   style="width:80%"
                   :disabled="flag1"
                 >
-                  <Option   v-for="item in this.schoollist" :value="item" :key="item">{{ item}}</Option>
+                  <Option   v-for="school in this.schoollist" :value="school" :key="school">{{school}}</Option>
                 </Select>
               </Col>
               <Col span="4">
                 <p>年级：</p>
                 <Select  :disabled="flag1" v-model="grade" @on-change="get_grade" style="width:90%">
-                  <Option v-for="item in this. gradelist" :value="item" :key="item">{{ item}}</Option>
+                  <Option v-for="grade in this.gradelist" :value="grade" :key="grade">{{grade}}</Option>
                 </Select>
               </Col>
               <Col span="4">
                 <p>科目：</p>
                 <Select  :disabled="flag1" v-model="subject" style="width:90%" @on-change="get_subject">
-                  <Option v-for="item in this. subjectlist" :value="item" :key="item">{{ item}}</Option>
+                  <Option v-for="subject in this.subjectlist" :value="subject" :key="subject">{{subject}}</Option>
                 </Select>
               </Col>
               <Col span="4">
@@ -47,7 +47,7 @@
               </Col>
               <Col span="4">
                 <br>
-                <Button type="dashed" icon="md-checkmark" style="float:right;width:100px" @click="flag1 = true">确定</Button>
+                <Button type="dashed" icon="md-checkmark" style="float:right;width:100px" @click="uploadpaperinfo">确定</Button>
                 <!-- <Button type="dashed" v-if="flag1===true">确定a </Button> -->
               </Col>
             </Row>
@@ -174,6 +174,7 @@ export default {
       simple:"",
       normal:"",
       types:["选择题","判断题","解答题","填空题"],
+      value:0,
       //以上
       value1: "",
       ratio_easy: 1,
@@ -239,9 +240,37 @@ export default {
     get_school() {
       console.log(this.school);
     },
+    uploadpaperinfo(){
+      this.flag1=true
+      console.log(this.paper_name,this.school,this.grade,this.subject,this.total_score)
+      
+      let formData = new FormData();
+      formData.append("name", this.paper_name);
+      formData.append("points", this.total_score);
+      formData.append("user",this.userInfo);
+      formData.append("school",this.school);
+      formData.append("grade",this.grade);
+      formData.append("subject",this.subject);
+      this.axios
+        .post("http://localhost:8000/test_library/postpaperinfo/", formData)
+        .then(res => {
+          console.log(res.data);
+          if (res.data.isOK == true) {
+            this.paperid = res.data.paper_id;
+            console.log(this.paperid,this.paper_name)
+            this.$Message.success("Success!");
+          } else {
+            this.$Message.error(res.data.errmsg);
+          }
+        })
+        .catch(res => {
+          console.log(res);
+        });
+    },
     // 以上
     ok() {
       this.$Message.info("Clicked ok");
+      
     },
 
     cancel() {
