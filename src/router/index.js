@@ -57,5 +57,10 @@ export default new Router({
       name: 'testueditor',
       component: () => import('@/view/testueditor')
     },
+    {
+      path:'/paperdetail',
+      name:'paperdetail',
+      component:()=>import('@/view/paperdetail')
+    }
   ]
 })
