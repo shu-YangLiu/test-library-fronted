@@ -5,7 +5,8 @@
       <Col span="11">
         <Card style="line-height: 12px;">
           <!-- margin-bottom: 14px; -->
-          <Form :label-width="80" ref="formDynamic" :model="formDynamic">
+          <!-- <Form :label-width="80" ref="formDynamic" :model="formDynamic"> -->
+          <Form :label-width="80">
             <FormItem label="试卷信息">
               <Input
                 :disabled="flag1"
@@ -71,7 +72,7 @@
                 <Col span="4">
                   <br>
                   <Button
-                    type="dashed"
+                    type="info"
                     icon="md-checkmark"
                     style="float:right;width:100px"
                     @click="uploadpaperinfo"
@@ -80,14 +81,53 @@
                 </Col>
               </Row>
             </FormItem>
+<Divider />
+           
+            <FormItem label="筛选条件"> 
+              <Row type="flex" justify="start">
+                <Col span="8">
+                  选择题型：
+                  <Select v-model="question_type" clearable style="width:150px">
+                    <Option v-for="item in types" :value="item" :key="item">{{ item }}</Option>
+                  </Select>
+                </Col>
+                <Col span="5">
+                <div class="top">
+                  难度：
+                
+                  <Rate @on-change="get_difcut"  v-model="value_difct" :count="test11" />
+                </div></Col>
+                <Col span="7">
+                  一级知识点：
+                  <Select v-model="knowledge1" style="width:125px" filterable>
+                      <Option v-for="item in knowledge1_list" :value="item" :key="item" >{{ item }}</Option>
+                    </Select>
+                </Col>
+               <Col span="4">
+                  <!-- 那什么按钮没写完 -->
+                  <Button
+                    type="info"
+                    icon="md-checkmark"
+                    style="float:right;width:100px"
+                     @click="upload" 
+                  >确定</Button>
+                  
+                </Col>
+              </Row>
+             </FormItem>
           </Form>
         </Card>
       </Col>
       <Col span="6" class="padding-left-10"/>
     </Row>
+     
+    
   </div>
+  
 </template>
-
+                
+            
+        
 <script>
 export default {
   data() {
@@ -101,13 +141,41 @@ export default {
       subject: "",
       subjectlist: [],
       total_score: "", //总分
-      flag1: false //是否点击确定
+      flag1: false, //是否点击确定
+      types: ["选择题", "判断题", "解答题", "填空题"],
+      value_difct: 3,
+      number: "",
+      test11:3,
+      knowledge1_list:[],
+      question_type:[],
+      //以上
+      
+      value1: "",
+      ratio_easy: 1,
+      ratio_normal: 1,
+      ratio_difficult: 1,
+      disabled: true,
+      
+      formItem: {
+        answer: "",
+        input: "",
+        select: "",
+        radio: "male",
+        checkbox: [],
+        switch: true,
+        date: "",
+        time: "",
+        slider: [20, 50],
+        textarea: ""
+        
+      },
+      model8: ""
     };
   },
   created: function() {
     console.log(this.userInfo);
     // count = 5;
-    this.axios
+      this.axios
       .post("http://localhost:8000/test_library/get_enterquestionpage/")
       .then(res => {
         console.log(res.data);
@@ -122,6 +190,12 @@ export default {
       });
   },
   methods: {
+    changepage(index) {
+      var start = (index - 1) * this.pageSize;
+      var end = index * this.pageSize;
+      this.current = index;
+      this.showlist = this.questionlist.slice(start, end);
+    },
     get_grade() {
       console.log(this.grade);
     },
@@ -135,6 +209,10 @@ export default {
     get_school() {
       console.log(this.school);
     },
+    get_difcut() {
+      console.log(this.value_difct);
+    },
+
     uploadpaperinfo() {
       this.flag1 = true;
       console.log(
@@ -167,6 +245,55 @@ export default {
         .catch(res => {
           console.log(res);
         });
+    },
+    
+    
+    ok() {
+      this.$Message.info("Clicked ok");
+    },
+
+    cancel() {
+      this.$Message.info("Clicked cancel");
     }
+    
   }
 };
+</script>
+<style>
+.ivu-row {
+  position: relative;
+  margin-left: 200px;
+  margin-right: 200px;
+  height: auto;
+  zoom: 1;
+  display: block;
+}
+.ivu-col-span-11 {
+  display: block;
+  width: 100%;
+}
+.ivu-form-item-content {
+  position: relative;
+  line-height: 22px;
+  font-size: 12px;
+}
+/* 下面这个更改了表单行间距 */
+.ivu-form-item {
+  margin-bottom: 14px;
+  vertical-align: top;
+  zoom: 1;
+}
+.top{
+  margin-top: 4px
+}
+.all {
+  height: 100%;
+}
+html,
+body,
+#app,
+.ivu-layout {
+  min-height: 100%;
+}
+
+</style>
