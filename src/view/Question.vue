@@ -11,25 +11,28 @@
         <!-- <Col span="12">col-12</Col>
         <Col span="12">col-12</Col> -->
         <Col span="1" >{{index+1+pageSize*(current-1)}}</Col>
-        <Col span="22"><span v-html=" question.text"></span></Col>
+        <Col span="12"><span v-html=" question.text"></span></Col>
       </Row>
         <!-- <p>
           {{index+1+pageSize*(current-1)}}
           <span v-html=" question.text"></span>
         </p> -->
-        <Row :gutter="16">
-        <Col span="6">
-            <div>学科：{{question.subject}}</div>
+        <Row  type="flex" justify="start">
+        <Col span="4">
+        <Tag type="border"  color="primary" style="margin-left:25px">学科：{{question.subject}}</Tag>
+        <!-- <Tag type="border"  color="primary">题型：{{question.types}}</Tag> -->
+            <!-- <div>学科：{{question.subject}}</div> -->
         </Col>
-        <Col span="6">
-            <div>难度：{{question.difficult}}</div>
+        <Col span="3">
+            <Tag type="border"  color="primary">难度：{{question.difficult}}</Tag>
         </Col>
-        <Col span="6">
-            <div>年级：{{question.grade}}</div>
+        <Col span="3">
+            <Tag type="border"  color="primary">年级：{{question.grade}}</Tag>
         </Col>
-        <Col span="6">
-            <div>题型：{{question.types}}</div>
+        <Col span="3">
+            <Tag type="border"  color="primary">题型：{{question.types}}</Tag>
         </Col>
+        
     </Row>
         <!-- <Row>
           <Col span="11">
@@ -39,7 +42,9 @@
             <p>难度：{{question.difficult}}</p>
           </Col>
         </Row> -->
+        
         <p>
+          <Divider />
           答案：
           <span v-html=" question.answer"></span>
         </p>
