@@ -81,7 +81,7 @@
                 </Col>
               </Row>
             </FormItem>
-<Divider />
+            <Divider/>
             <FormItem label="难度比" v-if="formItem.select!=='option'">
               <Row type="flex" justify="start" class="code-row-bg">
                 <Col>
@@ -175,11 +175,11 @@
                 </Col>
                 <Col span="7">
                   该题型总数：
-                  <Input v-model="quetion1_number" placeholder="请输入题目数量" style="width: 130px"/>
+                  <Input v-model="question1_number" placeholder="请输入题目数量" style="width: 130px"/>
                 </Col>
                 <Col span="7">
                   每题分数：
-                  <Input v-model="quetion1_grade" placeholder="请输入每题分数" style="width: 130px"/>
+                  <Input v-model="question1_grade" placeholder="请输入每题分数" style="width: 130px"/>
                 </Col>
               </Row>
             </FormItem>
@@ -193,11 +193,11 @@
                 </Col>
                 <Col span="7">
                   该题型总数：
-                  <Input v-model="quetion2_number" placeholder="请输入题目数量" style="width: 130px"/>
+                  <Input v-model="question2_number" placeholder="请输入题目数量" style="width: 130px"/>
                 </Col>
                 <Col span="7">
                   每题分数：
-                  <Input v-model="quetion2_grade" placeholder="请输入每题分数" style="width: 130px"/>
+                  <Input v-model="question2_grade" placeholder="请输入每题分数" style="width: 130px"/>
                 </Col>
               </Row>
             </FormItem>
@@ -211,11 +211,11 @@
                 </Col>
                 <Col span="7">
                   该题型总数：
-                  <Input v-model="quetion3_number" placeholder="请输入题目数量" style="width: 130px"/>
+                  <Input v-model="question3_number" placeholder="请输入题目数量" style="width: 130px"/>
                 </Col>
                 <Col span="7">
                   每题分数：
-                  <Input v-model="quetion3_grade" placeholder="请输入每题分数" style="width: 130px"/>
+                  <Input v-model="question3_grade" placeholder="请输入每题分数" style="width: 130px"/>
                 </Col>
               </Row>
             </FormItem>
@@ -229,14 +229,13 @@
                 </Col>
                 <Col span="7">
                   该题型总数：
-                  <Input v-model="quetion4_number" placeholder="请输入题目数量" style="width: 130px"/>
+                  <Input v-model="question4_number" placeholder="请输入题目数量" style="width: 130px"/>
                 </Col>
-<Col span="7">
+                <Col span="7">
                   每题分数：
-                  <Input v-model="quetion4_grade" placeholder="请输入每题分数" style="width: 130px"/>
+                  <Input v-model="question4_grade" placeholder="请输入每题分数" style="width: 130px"/>
                 </Col>
                 <Col span="3">
-                 
                   <Button
                     type="info"
                     icon="md-checkmark"
@@ -246,7 +245,7 @@
                 </Col>
               </Row>
             </FormItem>
-<Divider />
+            <Divider/>
             <!-- <FormItem>
             <Button type="primary">提交</Button>
             <Button style="margin-left: 8px">取消</Button>
@@ -256,68 +255,68 @@
       </Col>
       <Col span="6" class="padding-left-10"/>
     </Row>
-      <Row style="background:#eee;padding:20px">
-    <Col span="11">
-      <Card
-        v-for="(question,index) in showlist"
-        :key=" question.id"
-        :label="question.id"
-        style="margin:0px 0px 15px 0px"
-      >
-      <Row :gutter="1">
-        <!-- <Col span="12">col-12</Col>
-        <Col span="12">col-12</Col> -->
-        <Col span="1" >{{index+1+pageSize*(current-1)}}</Col>
-        <Col span="22"><span v-html=" question.text"></span></Col>
-      </Row>
-        <!-- <p>
+
+    <Row v-if="this.questionlist.length!=0" style="background:#eee;padding:20px">
+      <Col span="11">
+        <Card
+          v-for="(question,index) in showlist"
+          :key=" question.id"
+          :label="question.id"
+          style="margin:0px 0px 15px 0px"
+        >
+          <Row :gutter="1">
+            <!-- <Col span="12">col-12</Col>
+            <Col span="12">col-12</Col>-->
+            <Col span="1">{{index+1+pageSize*(current-1)}}</Col>
+            <Col span="22">
+              <span v-html=" question.text"></span>
+            </Col>
+          </Row>
+          <!-- <p>
           {{index+1+pageSize*(current-1)}}
           <span v-html=" question.text"></span>
-        </p> -->
-         <Row  type="flex" justify="start">
-        <Col span="4">
-        <Tag type="border"  color="primary" style="margin-left:25px">学科：{{question.subject}}</Tag>
-        <!-- <Tag type="border"  color="primary">题型：{{question.types}}</Tag> -->
-            <!-- <div>学科：{{question.subject}}</div> -->
-        </Col>
-        <Col span="3">
-            <Tag type="border"  color="primary">难度：{{question.difficult}}</Tag>
-        </Col>
-        <Col span="3">
-            <Tag type="border"  color="primary">年级：{{question.grade}}</Tag>
-        </Col>
-        <Col span="3">
-            <Tag type="border"  color="primary">题型：{{question.types}}</Tag>
-        </Col>
+          </p>-->
+          <Row type="flex" justify="start">
+            <Col span="4">
+              <Tag type="border" color="primary" style="margin-left:25px">学科：{{question.subject}}</Tag>
+              <!-- <Tag type="border"  color="primary">题型：{{question.types}}</Tag> -->
+              <!-- <div>学科：{{question.subject}}</div> -->
+            </Col>
+            <Col span="3">
+              <Tag type="border" color="primary">难度：{{question.difficult}}</Tag>
+            </Col>
+            <Col span="3">
+              <Tag type="border" color="primary">年级：{{question.grade}}</Tag>
+            </Col>
+            <Col span="3">
+              <Tag type="border" color="primary">题型：{{question.types}}</Tag>
+            </Col>
+          </Row>
+          <Divider/>
+          <Row :gutter="1">
+            <Col span="2">答案：</Col>
+            <Col span="12">
+              <span v-html=" question.answer"></span>
+            </Col>
+          </Row>
+        </Card>
+        <div style="text-align:center">
+          <Page
+            :total="dataCount"
+            :page-size="pageSize"
+            :current="current"
+            show-total
+            @on-change="changepage"
+            show-elevator
+          />
+        </div>
+      </Col>
+      <Col span="6" class="padding-left-10"></Col>
+      <BackTop :height="100" :bottom="200">
+        <div class="top">返回顶端</div>
+      </BackTop>
     </Row>
-        <!-- <Row>
-          <Col span="11">
-            <p>学科：{{question.subject}}</p>
-          </Col>
-          <Col span="11" offset="2">
-            <p>难度：{{question.difficult}}</p>
-          </Col>
-        </Row> -->
-        <p>
-          答案：
-          <span v-html=" question.answer"></span>
-        </p>
-      </Card>
-      <div style="text-align:center">
-        <Page
-          :total="dataCount"
-          :page-size="pageSize"
-          :current="current"
-          show-total
-          @on-change="changepage"
-          show-elevator
-        />
-      </div>
-    </Col>
-    <Col span="6" class="padding-left-10"></Col>
-  </Row>
   </div>
-  
 </template>
                 
             
@@ -344,22 +343,23 @@ export default {
       question2_type: "",
       question3_type: "",
       question4_type: "",
-      quetion1_number: "",
-      quetion2_number: "",
-      quetion3_number: "",
-      quetion4_number: "",
-      quetion1_grade:"",
-      quetion2_grade:"",
-      quetion3_grade:"",
-      quetion4_grade:"",
+      question1_number: "",
+      question2_number: "",
+      question3_number: "",
+      question4_number: "",
+      question1_grade: "",
+      question2_grade: "",
+      question3_grade: "",
+      question4_grade: "",
       number: "",
       //以上
       //以下是question页面来的
-       userInfo: JSON.parse(localStorage.getItem("userInfo")),
+      userInfo: JSON.parse(localStorage.getItem("userInfo")),
+
       questionlist: [],
       showlist: [],
       dataCount: 0,
-      pageSize: 2,
+      pageSize: 1,
       current: 1,
       //以上
       value1: "",
@@ -398,7 +398,7 @@ export default {
   created: function() {
     console.log(this.userInfo);
     // count = 5;
-      this.axios
+    this.axios
       .post("http://localhost:8000/test_library/get_enterquestionpage/")
       .then(res => {
         console.log(res.data);
@@ -478,41 +478,113 @@ export default {
         this.simple,
         this.difficult,
         this.question1_type,
-        this.quetion1_number,
-        this.quetion1_grade,
+        this.question1_number,
+        this.question1_grade,
         this.question2_type,
-        this.quetion2_number,
-        this.quetion2_grade,
+        this.question2_number,
+        this.question2_grade,
         this.question3_type,
-        this.quetion3_number,
-        this.quetion3_grade,
+        this.question3_number,
+        this.question3_grade,
         this.question4_type,
-        this.quetion4_grade,
-        this.quetion4_number,
+        this.question4_grade,
+        this.question4_number
       );
+      var choice_qusetion_num,
+        tf_qusetion_num,
+        filling_qusetion_num,
+        solve_qusetion_num;
+      if (this.question1_type == "选择题") {
+        choice_qusetion_num = this.question1_number;
+      }
+      if (this.question2_type == "选择题") {
+        choice_qusetion_num = this.question2_number;
+      }
+      if (this.question3_type == "选择题") {
+        choice_qusetion_num = this.question3_number;
+      }
+      if (this.question4_type == "选择题") {
+        choice_qusetion_num = this.question4_number;
+      }
 
-      // let formData = new FormData();
-      // formData.append("name", this.paper_name);
-      // formData.append("points", this.total_score);
-      // formData.append("user", this.userInfo);
-      // formData.append("school", this.school);
-      // formData.append("grade", this.grade);
-      // formData.append("subject", this.subject);
-      // this.axios
-      //   .post("http://localhost:8000/test_library/postpaperinfo/", formData)
-      //   .then(res => {
-      //     console.log(res.data);
-      //     if (res.data.isOK == true) {
-      //       this.paperid = res.data.paper_id;
-      //       console.log(this.paperid, this.paper_name);
-      //       this.$Message.success("Success!");
-      //     } else {
-      //       this.$Message.error(res.data.errmsg);
-      //     }
-      //   })
-        // .catch(res => {
-        //   console.log(res);
-        // });
+      if (this.question1_type == "判断题") {
+        tf_qusetion_num = this.question1_number;
+      }
+      if (this.question2_type == "判断题") {
+        tf_qusetion_num = this.question2_number;
+      }
+      if (this.question3_type == "判断题") {
+        tf_qusetion_num = this.question3_number;
+      }
+      if (this.question4_type == "判断题") {
+        tf_qusetion_num = this.question4_number;
+      }
+      if (this.question1_type == "填空题") {
+        filling_qusetion_num = this.question1_number;
+      }
+      if (this.question2_type == "填空题") {
+        filling_qusetion_num = this.question2_number;
+      }
+      if (this.question3_type == "填空题") {
+        filling_qusetion_num = this.question3_number;
+      }
+      if (this.question4_type == "填空题") {
+        filling_qusetion_num = this.question4_number;
+      }
+      if (this.question1_type == "解答题") {
+        solve_qusetion_num = this.question1_number;
+      }
+      if (this.question2_type == "解答题") {
+        solve_qusetion_num = this.question2_number;
+      }
+      if (this.question3_type == "解答题") {
+        solve_qusetion_num = this.question3_number;
+      }
+      if (this.question4_type == "解答题") {
+        solve_qusetion_num = this.question4_number;
+      }
+      console.log(
+        choice_qusetion_num,
+        tf_qusetion_num,
+        filling_qusetion_num,
+        solve_qusetion_num
+      );
+      let formData = new FormData();
+      formData.append("grade", this.grade);
+      formData.append("subject", this.subject);
+      formData.append("easy", this.simple);
+      formData.append("normal", this.normal);
+      formData.append("difficult", this.difficult);
+      formData.append("choice_qusetion_num", choice_qusetion_num);
+      formData.append("tf_qusetion_num", tf_qusetion_num);
+      formData.append("filling_qusetion_num", filling_qusetion_num);
+      formData.append("solve_qusetion_num", solve_qusetion_num);
+
+      this.axios
+        .post("http://localhost:8000/test_library/getautopaper/", formData)
+        .then(res => {
+          console.log(res.data);
+          if (res.data.isOK == true) {
+            this.questionlist = res.data.questionlist;
+            this.dataCount = this.questionlist.length;
+            console.log(
+              this.dataCount,
+              this.questionlist.length,
+              this.pageSize
+            );
+            if (this.dataCount < this.pageSize) {
+              this.showlist = this.questionlist;
+            } else {
+              this.showlist = this.questionlist.slice(0, this.pageSize);
+            }
+            this.$Message.success("Success!");
+          } else {
+            this.$Message.error(res.data.errmsg);
+          }
+        })
+        .catch(res => {
+          console.log(res);
+        });
     },
     // 以上
     ok() {
@@ -582,4 +654,12 @@ body,
 .ivu-layout {
   min-height: 100%;
 }
+
+.top{
+        padding: 10px;
+        background: rgba(0, 153, 229, .7);
+        color: #fff;
+        text-align: center;
+        border-radius: 2px;
+    }
 </style>

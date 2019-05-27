@@ -34,20 +34,18 @@
         </Col>
         
     </Row>
-        <!-- <Row>
-          <Col span="11">
-            <p>学科：{{question.subject}}</p>
-          </Col>
-          <Col span="11" offset="2">
-            <p>难度：{{question.difficult}}</p>
-          </Col>
-        </Row> -->
-        
-        <p>
+    <Divider />
+    <Row :gutter="1">
+        <!-- <Col span="12">col-12</Col>
+        <Col span="12">col-12</Col> -->
+        <Col span="2" >答案：</Col>
+        <Col span="12"><span v-html=" question.answer"></span></Col>
+      </Row>
+        <!-- <p>
           <Divider />
           答案：
           <span v-html=" question.answer"></span>
-        </p>
+        </p> -->
       </Card>
       <div style="text-align:center">
         <Page
