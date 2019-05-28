@@ -6,6 +6,7 @@
         :key=" question.id"
         :label="question.id"
         style="margin:15px"
+        @click.native="test(question.id)"
       >
         <Row :gutter="1">
           <!-- <Col span="12">col-12</Col>
@@ -94,6 +95,9 @@ export default {
       var end = index * this.pageSize;
       this.current = index;
       this.showlist = this.questionlist.slice(start, end);
+    },
+    test(questionid){
+      console.log(questionid)
     }
   }
 };

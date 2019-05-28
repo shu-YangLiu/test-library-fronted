@@ -97,17 +97,18 @@
                   </Select>
                 </Col>
                 <Col span="5">
-                  <div class="top">
+                  <div class="top1">
                     难度：
                     <Rate @on-change="get_difcut" v-model="value_difct" :count="test11"/>
                   </div>
                 </Col>
-                <Col span="7">
-                  一级知识点：
+                <Col span="2">
+                  <p  class="top1">一级知识点：</p></Col>
+                  <Col span="5">
                   <Cascader
                     :data="knowledge1_list"
                     filterable
-                    style="width: 49%"
+                    style="width: 125px"
                     @on-change="printsubject_know"
                   ></Cascader>
                 </Col>
@@ -135,51 +136,33 @@
           :label="question.id"
           style="margin:0px 0px 15px 0px"
         >
-        <Button
-              :size="buttonSize"
-              icon="md-add"
-              @click="modal1 = true"
-              style="float:right;margin:5px 1% "
-              shape="circle"
-            ></Button>
-            <Modal v-model="modal1" title="添加分数" @on-ok="addquestion(question.id)" @on-cancel="cancel">
-              <Form :label-width="80">
-                <FormItem label="添加分数">
-                  <Input v-model="point" style="margin-bottom:10px"/>
-                </FormItem>
-              </Form>
-            </Modal>
-          <!-- <Button
-            :size="buttonSize"
-            icon="md-add"
-            @click="modal1 = true"
-            style="float:right;margin:5px 1% "
-            shape="circle"
-          ></Button>
-          <Modal
-            v-model="modal1"
-            title="添加分数"
-            @on-ok="addquestion(question.id)"
-            @on-cancel="cancel"
-          >
-            <Form :label-width="80">
-              <FormItem label="分数">
-                <Input v-model="point" style="margin-bottom:10px"/>
-              </FormItem>
-            </Form>
-          </Modal> -->
-          <Row :gutter="1">
+          <!-- 缺一个style使button放到合适的位置，float：right不可以用 -->
+
+          <Row type="flex" justify="start">
             <!-- <Col span="12">col-12</Col>
             <Col span="12">col-12</Col>-->
             <Col span="1">{{index+1+pageSize*(current-1)}}</Col>
-            <Col span="22">
+            <Col span="21">
               <span v-html=" question.text"></span>
             </Col>
+            <Col span="2">
+              <Button
+                type="info"
+                :size="buttonSize"
+                icon="md-add"
+                @click="modalbutton1(question.id)"
+                shape="circle"
+                style="float：right"
+              ></Button>
+              <Modal v-model="modal1" title="添加分数" @on-ok="addquestion" @on-cancel="cancel">
+                <Form :label-width="80">
+                  <FormItem label="分数">
+                    <Input v-model="point" style="margin-bottom:10px"/>
+                  </FormItem>
+                </Form>
+              </Modal>
+            </Col>
           </Row>
-          <!-- <p>
-          {{index+1+pageSize*(current-1)}}
-          <span v-html=" question.text"></span>
-          </p>-->
           <Row type="flex" justify="start">
             <Col span="4">
               <Tag type="border" color="primary" style="margin-left:25px">学科：{{question.subject}}</Tag>
@@ -188,6 +171,9 @@
             </Col>
             <Col span="3">
               <Tag type="border" color="primary">难度：{{question.difficult}}</Tag>
+            </Col>
+            <Col span="3">
+              <Tag type="border" color="primary">id：{{question.id}}</Tag>
             </Col>
             <Col span="3">
               <Tag type="border" color="primary">年级：{{question.grade}}</Tag>
@@ -250,6 +236,7 @@ export default {
       buttonSize: "large",
       modal1: false,
       point: "",
+      qid: "",
       //以上
 
       value1: "",
@@ -261,6 +248,7 @@ export default {
   },
   created: function() {
     console.log(this.userInfo);
+    console.log(this.modal1);
     // count = 5;
     this.axios
       .post("http://localhost:8000/test_library/get_enterquestionpage/")
@@ -295,6 +283,14 @@ export default {
     },
     get_type() {
       console.log(this.question_type);
+    },
+    test() {
+      console.log("questionid");
+    },
+    modalbutton1(questionid) {
+      this.modal1 = true;
+      console.log(questionid);
+      this.qid = questionid;
     },
 
     uploadpaperinfo() {
@@ -386,8 +382,9 @@ export default {
       this.current = index;
       this.showlist = this.questionlist.slice(start, end);
     },
-    addquestion(questionid) {
-      console.log(questionid, this.paperid, this.point);
+    addquestion() {
+      console.log(this.qid, this.paperid, this.point);
+      var questionid = this.qid;
       let formData = new FormData();
       formData.append("paperid", this.paperid);
       formData.append("point", this.point);
@@ -442,7 +439,7 @@ export default {
   vertical-align: top;
   zoom: 1;
 }
-.top {
+.top1 {
   margin-top: 4px;
 }
 .all {
