@@ -48,9 +48,9 @@ export default new Router({
       component: () => import('@/view/home')
     },
     {
-      path: '/paper',
-      name: 'paper',
-      component: () => import('@/view/paper')
+      path: '/addquestion',
+      name: 'addquestion',
+      component: () => import('@/view/addquestion')
     },
     {
       path: '/testueditor',
