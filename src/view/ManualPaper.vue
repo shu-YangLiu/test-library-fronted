@@ -408,9 +408,9 @@ export default {
           console.log(res);
         });
     },
-    ok() {
-      this.$Message.info("Clicked ok");
-    },
+    // ok() {
+    //   this.$Message.info("Clicked ok");
+    // },
 
     cancel() {
       this.$Message.info("Clicked cancel");
