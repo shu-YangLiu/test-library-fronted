@@ -1,8 +1,14 @@
 <template>
   <div>
     <Row :gutter="16">
-      <Col span="6" v-for="paper in papers" :key="paper.name">
-        <Card style="width:250px;margin:30px" @click.native="toDetail(paper.id)">
+      <Col span="6" v-for="paper in showlist" :key="paper.name">
+        <Card style="width:300px;margin:20px;cursor:pointer;" @click.native="toDetail(paper.id)">
+          <Button
+            icon="ios-cloud-download"
+            shape="circle"
+            style="float:right;margin:0px 1% "
+            @click="test"
+          ></Button>
           <p slot="title">{{paper.name}}</p>
           <p>科目：{{paper.subject}}</p>
           <p>学校：{{paper.school}}</p>
@@ -11,6 +17,16 @@
         </Card>
       </Col>
     </Row>
+    <div style="text-align:center">
+      <Page
+        :total="dataCount"
+        :page-size="pageSize"
+        :current="current"
+        show-total
+        @on-change="changepage"
+        show-elevator
+      />
+    </div>
   </div>
 </template>
 <script>
@@ -20,7 +36,12 @@ export default {
       cards: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       userInfo: JSON.parse(localStorage.getItem("userInfo")),
       papers: "",
-      randomMovieList: []
+      randomMovieList: [],
+      showlist: [],
+      dataCount: 0,
+      pageSize: 8,
+      current: 1,
+      pressprint:false,
     };
   },
 
@@ -33,6 +54,13 @@ export default {
         this.papers = res.data;
         console.log(this.papers);
         console.log(this.papers[0].name);
+        this.dataCount = this.papers.length;
+        console.log(this.dataCount, this.papers.length, this.pageSize);
+        if (this.dataCount < this.pageSize) {
+          this.showlist = this.papers;
+        } else {
+          this.showlist = this.papers.slice(0, this.pageSize);
+        }
       })
       .catch(res => {
         console.log(res);
@@ -40,9 +68,32 @@ export default {
   },
   methods: {
     toDetail(paperid) {
-      this.$router.push({
+      if (this.pressprint==false){
+        this.$router.push({
         path: "/paperdetail",
         query: { paperid: paperid }
+      });
+      }
+    },
+    changepage(index) {
+      console.log(index);
+      var start = (index - 1) * this.pageSize;
+      var end = index * this.pageSize;
+      this.current = index;
+      this.showlist = this.papers.slice(start, end);
+    },
+    test() {
+      this.pressprint=true;
+      this.$Modal.confirm({
+        title: "确认下载该试卷？",
+        content: "<p>确定下载该试卷？</p>",
+        onOk: () => {
+          console.log("下载")
+          this.pressprint = false;
+        },
+        onCancel: () => {
+          this.pressprint = false;
+        }
       });
     }
   }

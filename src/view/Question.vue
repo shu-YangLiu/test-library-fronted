@@ -7,45 +7,41 @@
         :label="question.id"
         style="margin:15px"
       >
-      <Row :gutter="1">
-        <!-- <Col span="12">col-12</Col>
-        <Col span="12">col-12</Col> -->
-        <Col span="1" >{{index+1+pageSize*(current-1)}}</Col>
-        <Col span="12"><span v-html=" question.text"></span></Col>
-      </Row>
+        <Row :gutter="1">
+          <!-- <Col span="12">col-12</Col>
+          <Col span="12">col-12</Col>-->
+          <Col span="1">{{index+1+pageSize*(current-1)}}</Col>
+          <Col span="12">
+            <span v-html=" question.text"></span>
+          </Col>
+        </Row>
         <!-- <p>
           {{index+1+pageSize*(current-1)}}
           <span v-html=" question.text"></span>
-        </p> -->
-        <Row  type="flex" justify="start">
-        <Col span="4">
-        <Tag type="border"  color="primary" style="margin-left:25px">学科：{{question.subject}}</Tag>
-        <!-- <Tag type="border"  color="primary">题型：{{question.types}}</Tag> -->
+        </p>-->
+        <Row type="flex" justify="start">
+          <Col span="4">
+            <Tag type="border" color="primary" style="margin-left:25px">学科：{{question.subject}}</Tag>
+            <!-- <Tag type="border"  color="primary">题型：{{question.types}}</Tag> -->
             <!-- <div>学科：{{question.subject}}</div> -->
-        </Col>
-        <Col span="3">
-            <Tag type="border"  color="primary">难度：{{question.difficult}}</Tag>
-        </Col>
-        <Col span="3">
-            <Tag type="border"  color="primary">年级：{{question.grade}}</Tag>
-        </Col>
-        <Col span="3">
-            <Tag type="border"  color="primary">题型：{{question.types}}</Tag>
-        </Col>
-        
-    </Row>
-    <Divider />
-    <Row :gutter="1">
-        <!-- <Col span="12">col-12</Col>
-        <Col span="12">col-12</Col> -->
-        <Col span="2" >答案：</Col>
-        <Col span="12"><span v-html=" question.answer"></span></Col>
-      </Row>
-        <!-- <p>
-          <Divider />
-          答案：
-          <span v-html=" question.answer"></span>
-        </p> -->
+          </Col>
+          <Col span="3">
+            <Tag type="border" color="primary">难度：{{question.difficult}}</Tag>
+          </Col>
+          <Col span="3">
+            <Tag type="border" color="primary">年级：{{question.grade}}</Tag>
+          </Col>
+          <Col span="3">
+            <Tag type="border" color="primary">题型：{{question.types}}</Tag>
+          </Col>
+        </Row>
+        <Divider/>
+        <Row :gutter="1">
+          <Col span="2">答案：</Col>
+          <Col span="12">
+            <span v-html=" question.answer"></span>
+          </Col>
+        </Row>
       </Card>
       <div style="text-align:center">
         <Page
