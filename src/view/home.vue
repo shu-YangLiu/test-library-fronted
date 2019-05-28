@@ -4,20 +4,22 @@
       <Col span="8" v-for="paper in showlist" :key="paper.name">
         <Card style="width:300px;margin:20px;cursor:pointer;" @click.native="toDetail(paper.id)">
           <Button
-            icon="ios-cloud-download"
+            icon="ios-trash"
             shape="circle"
             style="float:right;margin:0px 1% "
-            @click="test"
+            @click="deletepaper(paper.id)"
           ></Button>
           <!-- <div>
             <image src="C:\Users\27540\Desktop\test-library-fronted\src\image\card1"></image>
-          </div> -->
-          <p slot="title"><Icon type="ios-book" />{{paper.name}}</p>
+          </div>-->
+          <p slot="title">
+            <Icon type="ios-book"/>
+            {{paper.name}}
+          </p>
           <p>科目：{{paper.subject}}</p>
           <p>学校：{{paper.school}}</p>
           <p>年级：{{paper.grade}}</p>
           <p>总分：{{paper.points}}</p>
-
         </Card>
       </Col>
     </Row>
@@ -35,6 +37,7 @@
 </template>
 <script>
 export default {
+  inject:['reload'],
   data() {
     return {
       cards: [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -43,9 +46,9 @@ export default {
       randomMovieList: [],
       showlist: [],
       dataCount: 0,
-      pageSize: 8,
+      pageSize: 9,
       current: 1,
-      pressprint:false,
+      pressprint: false
     };
   },
 
@@ -72,11 +75,11 @@ export default {
   },
   methods: {
     toDetail(paperid) {
-      if (this.pressprint==false){
+      if (this.pressprint == false) {
         this.$router.push({
-        path: "/paperdetail",
-        query: { paperid: paperid }
-      });
+          path: "/paperdetail",
+          query: { paperid: paperid }
+        });
       }
     },
     changepage(index) {
@@ -86,13 +89,31 @@ export default {
       this.current = index;
       this.showlist = this.papers.slice(start, end);
     },
-    test() {
-      this.pressprint=true;
+    deletepaper(paperid) {
+      this.pressprint = true;
       this.$Modal.confirm({
-        title: "确认下载该试卷？",
-        content: "<p>确定下载该试卷？</p>",
+        title: "确认删除该试卷？",
+        content:
+          "<p>确定下载该试卷？该操作不可撤销，试卷内所有记录也将消失</p>",
         onOk: () => {
-          console.log("下载")
+          var a = "http://localhost:8000/test_library/delete_paper/";
+          var id_string = String(paperid);
+          var url = a + id_string;
+          this.axios
+            .post(url)
+            .then(res => {
+              console.log(res.data);
+              if (res.data.isOK == true) {
+                this.$Message.success("删除成功！");
+                this.reload()
+              } else {
+                this.$Message.error(res.data.errmsg);
+              }
+            })
+            .catch(res => {
+              console.log(res);
+            });
+
           this.pressprint = false;
         },
         onCancel: () => {
@@ -118,9 +139,8 @@ export default {
 .all {
   height: 100%;
   margin-top: 30px;
-    margin-left: 200px;
-    margin-right: 200px;
-
+  margin-left: 200px;
+  margin-right: 200px;
 }
 
 .ivu-menu-horizontal .ivu-menu-item,

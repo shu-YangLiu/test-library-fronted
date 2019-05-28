@@ -5,7 +5,7 @@
         <Col span="2">
           <div>
             <Button @click="backhome()" type="text" ghost>
-              <Icon type="md-arrow-back" size="30" color="black"/>
+              <Icon type="md-arrow-back" size="30" color="#515a6e"/>
             </Button>
           </div>
         </Col>
@@ -184,7 +184,7 @@ export default {
       modal1: false,
       point: "",
       qid: "",
-      paperid: 21,
+      paperid: "",
       paperinfo: {
         grade: "",
         id: "",
@@ -197,7 +197,7 @@ export default {
   },
   created: function() {
     console.log(this.userInfo);
-    // this.paperid = this.$route.query.paperid;
+    this.paperid = this.$route.query.paperid;
     var a = "http://localhost:8000/test_library/paper_detail_addquestion/";
     var id_string = String(this.paperid);
     var url = a + id_string;

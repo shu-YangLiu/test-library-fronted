@@ -5,7 +5,7 @@
         <appHeader/>
       </Header>
       <Content>
-        <router-view/>
+        <router-view v-if="isRouterAlive"></router-view>
       </Content>
     </Layout>
   </div>
@@ -20,8 +20,24 @@ export default {
     appHeader: header,
     Ueditor
   },
+  provide(){
+    return{
+      reload:this.reload
+    }
+  },
+  data(){
+    return{
+      isRouterAlive:true
+    }
+  },
   methods: {
-    handle_header() {}
+    handle_header() {},
+    reload(){
+      this.isRouterAlive=false
+      this.$nextTick(function(){
+          this.isRouterAlive=true
+      })
+    }
   }
 };
 </script>
