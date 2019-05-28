@@ -102,9 +102,9 @@
                     <Rate @on-change="get_difcut" v-model="value_difct" :count="test11"/>
                   </div>
                 </Col>
-                <Col span="2">
+                <Col span="3">
                   <p  class="top1">一级知识点：</p></Col>
-                  <Col span="5">
+                  <Col span="4">
                   <Cascader
                     :data="knowledge1_list"
                     filterable

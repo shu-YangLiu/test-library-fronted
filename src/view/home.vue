@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <Row :gutter="16">
-      <Col span="6" v-for="paper in showlist" :key="paper.name">
+  <div class="all">
+    <Row type="flex" justify="start">
+      <Col span="8" v-for="paper in showlist" :key="paper.name">
         <Card style="width:300px;margin:20px;cursor:pointer;" @click.native="toDetail(paper.id)">
           <Button
             icon="ios-cloud-download"
@@ -9,11 +9,15 @@
             style="float:right;margin:0px 1% "
             @click="test"
           ></Button>
-          <p slot="title">{{paper.name}}</p>
+          <!-- <div>
+            <image src="C:\Users\27540\Desktop\test-library-fronted\src\image\card1"></image>
+          </div> -->
+          <p slot="title"><Icon type="ios-book" />{{paper.name}}</p>
           <p>科目：{{paper.subject}}</p>
           <p>学校：{{paper.school}}</p>
           <p>年级：{{paper.grade}}</p>
           <p>总分：{{paper.points}}</p>
+
         </Card>
       </Col>
     </Row>
@@ -110,6 +114,13 @@ export default {
   height: auto;
   zoom: 1;
   display: block;
+}
+.all {
+  height: 100%;
+  margin-top: 30px;
+    margin-left: 200px;
+    margin-right: 200px;
+
 }
 
 .ivu-menu-horizontal .ivu-menu-item,
