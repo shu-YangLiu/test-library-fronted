@@ -1,8 +1,8 @@
 
 <template>
   <div class="all">
-    <Row style="background:#eee;padding:20px">
-      <Col span="11">
+    <Row style="background:#eee;padding:15px">
+      <Col span="24">
         <Card style="line-height: 12px;">
           <!-- margin-bottom: 14px; -->
           <!-- <Form :label-width="80" ref="formDynamic" :model="formDynamic"> -->
@@ -311,11 +311,10 @@
           />
         </div>
       </Col>
-      <Col span="6" class="padding-left-10"></Col>
-      <BackTop :height="100" :bottom="200">
-        <div class="top">返回顶端</div>
-      </BackTop>
+      <!-- <Col span="6" class="padding-left-10"></Col> -->
+
     </Row>
+    
   </div>
 </template>
                 
@@ -645,9 +644,9 @@ export default {
   zoom: 1;
 }
 
-.all {
+/* .all {
   height: 100%;
-}
+} */
 html,
 body,
 #app,

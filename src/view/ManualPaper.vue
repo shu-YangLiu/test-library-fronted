@@ -92,7 +92,7 @@
                   </Select>
                 </Col>
                 <Col span="5">
-                <div class="top">
+                <div class="top1">
                   难度：
                 
                   <Rate @on-change="get_difcut"  v-model="value_difct" :count="test11" />
@@ -283,7 +283,7 @@ export default {
   vertical-align: top;
   zoom: 1;
 }
-.top{
+.top1{
   margin-top: 4px
 }
 .all {
