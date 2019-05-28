@@ -82,7 +82,7 @@
               </Row>
             </FormItem>
             <Divider/>
-            <FormItem label="难度比" v-if="formItem.select!=='option'">
+            <FormItem label="难度比">
               <Row type="flex" justify="start" class="code-row-bg">
                 <Col>
                   <InputNumber
@@ -240,7 +240,7 @@
                     type="info"
                     icon="md-checkmark"
                     style="float:right;width:100px"
-                    @click="uploadquestioninfo"
+                    @click="getquestion"
                   >确定</Button>
                 </Col>
               </Row>
@@ -310,6 +310,12 @@
             show-elevator
           />
         </div>
+        <Button
+          type="info"
+          icon="md-checkmark"
+          style="float:right;width:100px"
+          @click="uploadquestioninfo"
+        >确定</Button>
       </Col>
       <!-- <Col span="6" class="padding-left-10"></Col> -->
 
@@ -321,6 +327,7 @@
             
         
 <script>
+import qs from "qs";
 export default {
   data() {
     return {
@@ -337,6 +344,7 @@ export default {
       difficult: 1,
       simple: 1,
       normal: 1,
+      paperid: "",
       types: ["选择题", "判断题", "解答题", "填空题"],
       question1_type: "",
       question2_type: "",
@@ -351,47 +359,18 @@ export default {
       question3_grade: "",
       question4_grade: "",
       number: "",
-      //以上
-      //以下是question页面来的
-      userInfo: JSON.parse(localStorage.getItem("userInfo")),
-
       questionlist: [],
       showlist: [],
       dataCount: 0,
-      pageSize: 1,
+      pageSize: 5,
       current: 1,
+
       //以上
       value1: "",
       ratio_easy: 1,
       ratio_normal: 1,
       ratio_difficult: 1,
-      disabled: true,
-      // index: 1,
-      // formDynamic: {
-      //   questions: [
-      //     {
-      //      result: "",
-      //       index: 1,
-      //       status: 1
-      //     }
-      //   ]
-      // },
-
-      formItem: {
-        answer: "",
-        input: "",
-        select: "",
-        radio: "male",
-        checkbox: [],
-        switch: true,
-        date: "",
-        time: "",
-        slider: [20, 50],
-        textarea: ""
-        //value2: [],
-        //value3: []
-      },
-      model8: ""
+      disabled: true
     };
   },
   created: function() {
@@ -470,7 +449,7 @@ export default {
           console.log(res);
         });
     },
-    uploadquestioninfo() {
+    getquestion() {
       //this.flag1 = true;
       console.log(
         this.normal,
@@ -585,6 +564,107 @@ export default {
           console.log(res);
         });
     },
+    // 未测试上传自动组卷试题
+    uploadquestioninfo() {
+      var choice_qusetion_grade,
+        tf_qusetion_grade,
+        filling_qusetion_grade,
+        solve_qusetion_grade;
+      if (this.question1_type == "选择题") {
+        choice_qusetion_grade = this.question1_grade;
+      }
+      if (this.question2_type == "选择题") {
+        choice_qusetion_grade = this.question2_grade;
+      }
+      if (this.question3_type == "选择题") {
+        choice_qusetion_grade = this.question3_grade;
+      }
+      if (this.question4_type == "选择题") {
+        choice_qusetion_grade = this.question4_grade;
+      }
+
+      if (this.question1_type == "判断题") {
+        tf_qusetion_grade = this.question1_grade;
+      }
+      if (this.question2_type == "判断题") {
+        tf_qusetion_grade = this.question2_grade;
+      }
+      if (this.question3_type == "判断题") {
+        tf_qusetion_grade = this.question3_grade;
+      }
+      if (this.question4_type == "判断题") {
+        tf_qusetion_grade = this.question4_grade;
+      }
+      if (this.question1_type == "填空题") {
+        filling_qusetion_grade = this.question1_grade;
+      }
+      if (this.question2_type == "填空题") {
+        filling_qusetion_grade = this.question2_grade;
+      }
+      if (this.question3_type == "填空题") {
+        filling_qusetion_grade = this.question3_grade;
+      }
+      if (this.question4_type == "填空题") {
+        filling_qusetion_grade = this.question4_grade;
+      }
+      if (this.question1_type == "解答题") {
+        solve_qusetion_grade = this.question1_grade;
+      }
+      if (this.question2_type == "解答题") {
+        solve_qusetion_grade = this.question2_grade;
+      }
+      if (this.question3_type == "解答题") {
+        solve_qusetion_grade = this.question3_grade;
+      }
+      if (this.question4_type == "解答题") {
+        solve_qusetion_grade = this.question4_grade;
+      }
+      console.log(
+        choice_qusetion_grade,
+        tf_qusetion_grade,
+        filling_qusetion_grade,
+        solve_qusetion_grade
+      );
+      let data = {
+        paper: this.paperid,
+        // paper:1,
+        question_info: []
+      };
+      for (var i = 0; i < this.questionlist.length; i++) {
+        var point;
+        if (this.questionlist[i].types == "选择题") {
+          point = choice_qusetion_grade;
+        }
+        if (this.questionlist[i].types == "判断题") {
+          point = tf_qusetion_grade;
+        }
+        if (this.questionlist[i].types == "填空题") {
+          point = filling_qusetion_grade;
+        }
+        if (this.questionlist[i].types == "解答题") {
+          point = solve_qusetion_grade;
+        }
+        let qdata = {
+          id: this.questionlist[i].id,
+          point: point
+        };
+        data.question_info.push(qdata);
+      }
+      console.log(data);
+       this.axios
+        .post("http://localhost:8000/test_library/loadpaper/", data)
+        .then(res => {
+          console.log(res.data);
+          if (res.data.isOK == true) {
+            this.$Message.success("Success!");
+          } else {
+            this.$Message.error(res.data.errmsg);
+          }
+        })
+        .catch(res => {
+          console.log(res);
+        });
+    },
     // 以上
     ok() {
       this.$Message.info("Clicked ok");
@@ -654,11 +734,11 @@ body,
   min-height: 100%;
 }
 
-.top{
-        padding: 10px;
-        background: rgba(0, 153, 229, .7);
-        color: #fff;
-        text-align: center;
-        border-radius: 2px;
-    }
+.top {
+  padding: 10px;
+  background: rgba(0, 153, 229, 0.7);
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+}
 </style>
