@@ -86,8 +86,8 @@
             <Tag type="border" color="primary">分值：{{question.point}}分</Tag>
           </Col>
           <Col span="5">
-              <Tag type="border" color="primary">题目来源：{{question.school}}</Tag>
-            </Col>
+            <Tag type="border" color="primary">题目来源：{{question.school}}</Tag>
+          </Col>
         </Row>
         <Divider/>
         <Row :gutter="1">
@@ -103,7 +103,7 @@
 
 <script>
 export default {
-  inject:['reload'],
+  inject: ["reload"],
   data() {
     return {
       userInfo: JSON.parse(localStorage.getItem("userInfo")),
@@ -125,7 +125,7 @@ export default {
   },
   created: function() {
     console.log(this.userInfo);
-    
+
     this.paperid = this.$route.query.paperid;
     console.log(this.paperid);
     var a = "http://localhost:8000/test_library/paper_detail/";
@@ -138,7 +138,7 @@ export default {
         if (res.data.isOK == true) {
           this.question_list = res.data.question_list;
           this.paperinfo = res.data.paperinfo;
-          console.log(this.paperinfo.name,this.question_list.length);
+          console.log(this.paperinfo.name, this.question_list.length);
           this.$Message.success("Success!");
         } else {
           this.$Message.error(res.data.errmsg);
@@ -175,7 +175,7 @@ export default {
               console.log(res.data);
               if (res.data.isOK == true) {
                 this.$Message.success("删除成功");
-                this.reload()
+                this.reload();
               } else {
                 this.$Message.error(res.data.errmsg);
               }
@@ -189,6 +189,30 @@ export default {
           this.$Message.info("Clicked cancel");
         }
       });
+    },
+    download() {
+      var a = "http://localhost:8000/test_library/downloadpaper/";
+      var id_string = String(this.paperid);
+      var url = a + id_string;
+      var downloadurl,downloadurl1;
+      this.axios
+        .post(url)
+        .then(res => {
+          console.log(res.data);
+          if (res.data.isOK == true) {
+            this.$Message.success("下载成功");
+            downloadurl = res.data.url;
+            downloadurl1 = res.data.url1;
+            console.log(downloadurl);
+            window.open(downloadurl);
+            window.open(downloadurl1);
+          } else {
+            this.$Message.error(res.data.errmsg);
+          }
+        })
+        .catch(res => {
+          console.log(res);
+        });
     }
   }
 };
