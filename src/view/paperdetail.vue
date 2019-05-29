@@ -85,6 +85,9 @@
           <Col span="3">
             <Tag type="border" color="primary">分值：{{question.point}}分</Tag>
           </Col>
+          <Col span="5">
+              <Tag type="border" color="primary">题目来源：{{question.school}}</Tag>
+            </Col>
         </Row>
         <Divider/>
         <Row :gutter="1">

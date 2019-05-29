@@ -178,6 +178,9 @@
             <Col span="3">
               <Tag type="border" color="primary">题型：{{question.types}}</Tag>
             </Col>
+            <Col span="5">
+              <Tag type="border" color="primary">题目来源：{{question.school}}</Tag>
+            </Col>
           </Row>
           <Divider/>
           <Row :gutter="1">
