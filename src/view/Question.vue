@@ -78,7 +78,7 @@ export default {
       questionlist: [],
       showlist: [],
       dataCount: 0,
-      pageSize: 2,
+      pageSize: 10,
       current: 1
     };
   },

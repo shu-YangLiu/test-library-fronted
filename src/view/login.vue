@@ -6,12 +6,12 @@
         <Form ref="formCustom" :model="loginForm" :rules="loginRule">
           <FormItem prop="email">
             <Input type="text" placeholder="用户名" v-model="loginForm.username">
-              <Icon type="md-mail" slot="prepend" size="20"></Icon>
+              <Icon type="md-person" slot="prepend" size="20"></Icon>
             </Input>
           </FormItem>
           <FormItem prop="password">
             <Input type="password" placeholder="密码" v-model="loginForm.password">
-              <Icon type="md-person" slot="prepend" size="20"></Icon>
+              <Icon type="md-key" slot="prepend" size="20"></Icon>
             </Input>
           </FormItem>
           <Row :gutter="16">
