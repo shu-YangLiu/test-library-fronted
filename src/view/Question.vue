@@ -1,5 +1,8 @@
 <template>
-  <Row style="background:#eee;padding:20px">
+
+<div class="all">
+  
+  <Row style="background:#eee;padding:10px">
     <Col span="11">
       <Card
         v-for="(question,index) in showlist"
@@ -56,10 +59,13 @@
           @on-change="changepage"
           show-elevator
         />
+        
       </div>
     </Col>
     <Col span="6" class="padding-left-10"></Col>
   </Row>
+  </div>
+ 
 </template>
 <script>
 export default {
@@ -107,7 +113,8 @@ export default {
 </script>
 
 <style>
-.ivu-row {
+
+/* .ivu-row {
   position: relative;
   margin-left: 200px;
   margin-right: 200px;
@@ -116,6 +123,12 @@ export default {
   height: auto;
   zoom: 1;
   display: block;
+} */
+.all {
+  height: 100%;
+  margin-top: 30px;
+  margin-left: 200px;
+  margin-right: 200px;
 }
 .ivu-col-span-11 {
   display: block;

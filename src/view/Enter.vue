@@ -1,5 +1,6 @@
 
 <template>
+<div class="all">
   <Row style="background:#eee;padding:20px">
     <Col span="11">
       <Card>
@@ -175,6 +176,7 @@
     </Col>
     <Col span="6" class="padding-left-10"/>
   </Row>
+  </div>
 </template>
                 
             
@@ -481,15 +483,20 @@ export default {
 };
 </script>
 <style>
-.ivu-row {
+/* .ivu-row {
   position: relative;
-  margin-left: 200px;
-  margin-right: 200px;
+
   margin-bottom: 30px;
   margin-top: 20px;
   height: auto;
   zoom: 1;
   display: block;
+} */
+.all {
+  height: 100%;
+  margin-top: 30px;
+  margin-left: 200px;
+  margin-right: 200px;
 }
 .ivu-col-span-11 {
   display: block;

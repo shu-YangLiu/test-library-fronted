@@ -1,5 +1,11 @@
 
 <template>
+<div >
+<Affix :offset-top="510" v-if="falg_button===1">
+       <Button type="text" style="float:right;margin-right:60px;" @click="uploadquestioninfo">
+         <!-- <Icon type="md-checkmark-circle-outline" /> -->
+         <Icon type="md-checkmark-circle-outline" size="50" color="#515a6e"/></Button>
+    </Affix>
   <div class="all">
     <Row style="background:#eee;padding:15px">
       <Col span="24">
@@ -241,6 +247,7 @@
                     icon="md-checkmark"
                     style="float:right;width:100px"
                     @click="getquestion"
+                    
                   >确定</Button>
                 </Col>
               </Row>
@@ -313,17 +320,17 @@
             show-elevator
           />
         </div>
-        <Button
+        <!-- <Button
           type="info"
           icon="md-checkmark"
           style="float:right;width:100px"
           @click="uploadquestioninfo"
-        >确定</Button>
+        >确定</Button> -->
       </Col>
       <!-- <Col span="6" class="padding-left-10"></Col> -->
 
     </Row>
-    
+    </div>
   </div>
 </template>
                 
@@ -349,6 +356,7 @@ export default {
       normal: 1,
       paperid: "",
       types: ["选择题", "判断题", "解答题", "填空题"],
+      falg_button:0,
       question1_type: "",
       question2_type: "",
       question3_type: "",
@@ -454,6 +462,7 @@ export default {
     },
     getquestion() {
       //this.flag1 = true;
+      this.falg_button=1;
       console.log(
         this.normal,
         this.simple,
@@ -703,14 +712,13 @@ export default {
 };
 </script>
 <style>
-.ivu-row {
+/* .ivu-row {
   position: relative;
-  margin-left: 200px;
-  margin-right: 200px;
+  
   height: auto;
   zoom: 1;
   display: block;
-}
+} */
 .ivu-col-span-11 {
   display: block;
   width: 100%;
@@ -727,9 +735,12 @@ export default {
   zoom: 1;
 }
 
-/* .all {
+.all {
   height: 100%;
-} */
+  margin-top: 30px;
+  margin-left: 13%;
+  margin-right: 13%;
+}
 html,
 body,
 #app,

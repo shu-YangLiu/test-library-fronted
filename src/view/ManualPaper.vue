@@ -1,19 +1,30 @@
 
 <template>
+<!-- <div>
+        <Affix>
+        <span class="demo-affix">Fixed at the top</span>
+    </Affix>
+     </div> -->
+  
   <div class="all">
+     
     <Row style="background:#eee;padding:20px">
+      
       <Col span="11">
+
         <Card style="line-height: 12px;">
           <!-- margin-bottom: 14px; -->
           <!-- <Form :label-width="80" ref="formDynamic" :model="formDynamic"> -->
           <Form :label-width="80">
             <FormItem label="试卷信息">
               <Input
+                prefix="md-create"
                 :disabled="flag1"
                 v-model="paper_name"
                 placeholder="请输入试卷名称"
                 style="width: 100%"
               />
+             
             </FormItem>
             <FormItem>
               <Row type="flex" justify="space-between" class="code-row-bg">
@@ -33,9 +44,11 @@
                     >{{school}}</Option>
                   </Select>
                 </Col>
+                <!-- <Icon type="md-contacts" /> -->
                 <Col span="4">
                   <p>年级：</p>
                   <Select
+                  prefix="md-contacts"
                     :disabled="flag1"
                     v-model="grade"
                     @on-change="get_grade"
@@ -199,9 +212,19 @@
             @on-change="changepage"
             show-elevator
           />
+           
+          
         </div>
       </Col>
     </Row>
+    <!-- <Affix>
+        <Button
+                    type="info"
+                    icon="md-checkmark"
+                    style="float:right;width:100px"
+                    @click="getquestion"
+                  >确定</Button>
+    </Affix> -->
   </div>
 </template>
                 
@@ -416,14 +439,13 @@ export default {
 };
 </script>
 <style>
-.ivu-row {
+/* .ivu-row {
   position: relative;
-  margin-left: 200px;
-  margin-right: 200px;
+  
   height: auto;
   zoom: 1;
   display: block;
-}
+} */
 .ivu-col-span-11 {
   display: block;
   width: 100%;
@@ -444,6 +466,9 @@ export default {
 }
 .all {
   height: 100%;
+  margin-top: 30px;
+  margin-left: 13%;
+  margin-right: 13%;
 }
 html,
 body,

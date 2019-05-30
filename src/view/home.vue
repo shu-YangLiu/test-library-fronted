@@ -126,7 +126,7 @@ export default {
 </script>
 
 <style>
-.ivu-row {
+/* .ivu-row {
   position: relative;
   margin-left: 50px;
   margin-right: 50px;
@@ -135,7 +135,7 @@ export default {
   height: auto;
   zoom: 1;
   display: block;
-}
+} */
 .all {
   height: 100%;
   margin-top: 30px;

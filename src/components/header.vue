@@ -18,7 +18,7 @@
         <Icon type="ios-book-outline"></Icon>试题库
       </MenuItem>
       <MenuItem class="shit" name="1">
-        <Input search placeholder="Enter something..."/>
+       <Icon type="md-paper" size="30" />试卷库管理系统
       </MenuItem>
       <!-- <MenuItem key="4">
             <Icon type="settings"></Icon>
@@ -71,6 +71,7 @@ export default {
 }
 .shit {
   float: left !important;
+  font-size: 18px;
 }
 .ivu-layout-header {
   background-color: #ffffff;
