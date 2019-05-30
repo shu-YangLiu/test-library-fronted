@@ -24,7 +24,7 @@
           <span v-html=" question.text"></span>
         </p>-->
         <Row type="flex" justify="start">
-          <Col span="4">
+          <Col span="3">
             <Tag type="border" color="primary" style="margin-left:25px">学科：{{question.subject}}</Tag>
             <!-- <Tag type="border"  color="primary">题型：{{question.types}}</Tag> -->
             <!-- <div>学科：{{question.subject}}</div> -->
@@ -38,8 +38,11 @@
           <Col span="3">
             <Tag type="border" color="primary">题型：{{question.types}}</Tag>
           </Col>
-          <Col span="5">
+          <Col span="4">
             <Tag type="border" color="primary">题目来源：{{question.school}}</Tag>
+          </Col>
+          <Col span="3">
+            <Tag type="border" color="primary">被引次数：{{question.number}}</Tag>
           </Col>
         </Row>
         <Divider/>

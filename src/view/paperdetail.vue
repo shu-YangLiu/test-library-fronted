@@ -35,14 +35,17 @@
         <Col span="6">
           <div>学校: {{paperinfo.school}}</div>
         </Col>
-        <Col span="6">
+        <Col span="4">
           <div>科目：{{paperinfo.subject}}</div>
         </Col>
-        <Col span="6">
+        <Col span="4">
           <div>年级：{{paperinfo.grade}}</div>
         </Col>
         <Col span="4">
           <div>总分： {{paperinfo.points}}</div>
+        </Col>
+        <Col span="6">
+          <div>当前分数：{{pointnow}}</div>
         </Col>
         <Divider/>
       </Row>
@@ -85,8 +88,11 @@
           <Col span="3">
             <Tag type="border" color="primary">分值：{{question.point}}分</Tag>
           </Col>
-          <Col span="5">
+          <Col span="4">
             <Tag type="border" color="primary">题目来源：{{question.school}}</Tag>
+          </Col>
+          <Col span="3">
+            <Tag type="border" color="primary">被引次数：{{question.number}}</Tag>
           </Col>
         </Row>
         <Divider/>
@@ -113,6 +119,7 @@ export default {
       current: 1,
       paperid: "",
       question_list: [],
+      pointnow:"",
       paperinfo: {
         grade: "",
         id: "",
@@ -140,6 +147,11 @@ export default {
           this.paperinfo = res.data.paperinfo;
           console.log(this.paperinfo.name, this.question_list.length);
           this.$Message.success("Success!");
+          var sum=0
+          for(var i=0;i<this.question_list.length;i++){
+            sum=sum+this.question_list[i].point
+          };
+          this.pointnow=sum;
         } else {
           this.$Message.error(res.data.errmsg);
         }
